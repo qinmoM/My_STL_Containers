@@ -14,6 +14,7 @@ struct SNode
 template<class T>
 class SList
 {
+// public:
 protected:
     SNode<T>* head;
     int Size; 
@@ -256,5 +257,30 @@ public:
             }
         }
         return nullptr;
+    }
+
+    // Find the intersection point of two linked lists.If not,return nullptr.Conversely,return the intersection point. // O(n)
+    SNode<T>* hasIntersection(SList<T>& other)
+    {
+        SNode<T>* curr1 = head;
+        SNode<T>* curr2 = other.head;
+        int len = size() - other.size();
+        if (len < 0)
+        {
+            curr1 = other.head;
+            curr2 = head;
+            len = -len;
+        }
+        while (len)
+        {
+            curr1 = curr1->next;
+            len--;
+        }
+        while (curr1 != nullptr && curr1 != curr2)
+        {
+            curr1 = curr1->next;
+            curr2 = curr2->next;
+        }
+        return curr1;
     }
 };

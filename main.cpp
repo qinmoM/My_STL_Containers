@@ -57,40 +57,56 @@ int main()
     // print(arr);
 
     // Sngle-linked List
-    SList<int> list;
-    list.push_back(2);
-    print(list);
-    list.push_front(1);
-    print(list);
-    list.push_back(3);
-    list.pop_front();
-    list.pop_back();
-    print(list);
-    list.insert(1, 4);
-    print(list);
-    list.push_front(1);
-    list.push_front(0);
-    print(list);
-    SList<int> list2;
-    list2.push_back(5);
-    list2.push_back(6);
-    list.merge(list2, true);
-    print(list);
-    list.reverse();
-    print(list);
-    std::cout << list.endAt(2)->data << std::endl;
-    print(list);
-    // make a loop
-    SNode<int>* temporary = list.endAt(1);
-    temporary->next = list.begin()->next;
-    if (nullptr != list.hasLoop())
-        std::cout << list.hasLoop()->data << std::endl;
-    temporary->next = nullptr;
-    temporary = nullptr;
-
-    list.remove(1);
-    print(list);
-    list.clear();
-    print(list);
+    // SList<int> list;
+    // list.push_back(2);
+    // print(list);
+    // list.push_front(1);
+    // print(list);
+    // list.push_back(3);
+    // list.pop_front();
+    // list.pop_back();
+    // print(list);
+    // list.insert(1, 4);
+    // print(list);
+    // list.push_front(1);
+    // list.push_front(0);
+    // print(list);
+    // SList<int> list2;
+    // list2.push_back(5);
+    // list2.push_back(6);
+    // SNode<int>* temporary = list.hasIntersection(list2);
+    // if (nullptr != temporary)
+    // {
+    //     std::cout << temporary->data << std::endl;
+    // }
+    // list2.endAt(1)->next = list.endAt(1);
+    // list2.Size += 1;
+    // print(list2);
+    // temporary = list2.hasIntersection(list);
+    // if (nullptr != temporary)
+    // {
+    //     std::cout << temporary->data << std::endl;
+    // }
+    // temporary = nullptr;
+    // list2.Size -= 1;
+    // list2.endAt(2)->next = nullptr;
+    // print(list2);
+    // list.merge(list2, true);
+    // print(list);
+    // list.reverse();
+    // print(list);
+    // std::cout << list.endAt(2)->data << std::endl;
+    // print(list);
+    // // make a loop
+    // temporary = list.endAt(1);
+    // temporary->next = list.begin()->next;
+    // if (nullptr != list.hasLoop())
+    //     std::cout << list.hasLoop()->data << std::endl;
+    // temporary->next = nullptr;
+    // temporary = nullptr;
+    // list.remove(1);
+    // print(list);
+    // list.clear();
+    // print(list);
     return 0;
 }
