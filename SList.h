@@ -9,6 +9,8 @@ struct SNode
     SNode() : data(T()), next(nullptr) { }
 
     SNode(T data) : data(data), next(nullptr) { }
+
+    SNode(T data, SNode<T>* next) : data(data), next(next) { }
 };
 
 template<class T>
@@ -282,5 +284,180 @@ public:
             curr2 = curr2->next;
         }
         return curr1;
+    }
+};
+
+template<class T>
+class SCList
+{
+protected:
+    SNode<T>* head;
+    SNode<T>* tail;
+    int Size;
+public:
+    SCList()
+    {
+        head = new SNode<T>();
+        head->next = head;
+        tail = head;
+        Size = 0;
+    }
+
+    ~SCList()
+    {
+        SNode<T>* temp = head;
+        SNode<T>* curr = head;
+        while (temp != curr)
+        {
+            head = curr->next;
+            delete curr;
+            curr = head;
+        }
+    }
+
+    inline SNode<T>* headNode() const
+    {
+        return head;
+    }
+
+    inline bool empty() const
+    {
+        return !Size;
+    }
+
+    inline int size() const
+    {
+        return Size;
+    }
+
+    inline SNode<T>* begin() const
+    {
+        return head->next;
+    }
+
+    inline void push_front(T data) // O(1)
+    {
+        SNode<T>* newNode = new SNode<T>(data);
+        newNode->next = head->next;
+        head->next = newNode;
+        Size++;
+        if (1 == Size)
+        {
+            tail = newNode;
+        }
+    }
+
+    inline void pop_front() // O(1)
+    {
+        SNode<T>* temp = head->next;
+        head->next = temp->next;
+        delete temp;
+        Size--;
+        if (0 == Size)
+        {
+            tail = head;
+        }
+    }
+
+    inline void push_back(T data) // O(1)
+    {
+        SNode<T>* newNode = new SNode(data);
+        newNode->next = head;
+        tail->next = newNode;
+        tail = newNode;
+        Size++;
+    }
+
+    void pop_back() // O(n)
+    {
+        if (0 == Size)
+        {
+            return;
+        }
+        if (head->next == tail)
+        {
+            delete tail;
+            tail = head;
+        }
+        SNode<T>* curr = head;
+        while (tail != curr->next)
+        {
+            curr = curr->next;
+        }
+        curr->next = head;
+        delete tail;
+        tail = curr;
+        Size--;
+    }
+
+    inline void insert(int index, T data)
+    {
+        if (0 > index || Size < index)
+        {
+            return;
+        }
+        if (0 == index)
+        {
+            push_front(data);
+            return;
+        }
+        if (Size == index)
+        {
+            push_back(data);
+            return;
+        }
+        SNode<T>* newNode = new SNode<T>(data);
+        SNode<T>* curr = head;
+        while (index)
+        {
+            curr = curr->next;
+            index--;
+        }
+        newNode->next = curr->next;
+        curr->next = newNode;
+        Size++;
+    }
+
+    void remove(int index) // O(n)
+    {
+        if (0 > index || Size <= index)
+        {
+            return;
+        }
+        if (0 == index)
+        {
+            pop_front();
+            return;
+        }
+        if (Size - 1 == index)
+        {
+            pop_back();
+            return;
+        }
+        SNode<T>* curr = head;
+        while (index)
+        {
+            curr = curr->next;
+            index--;
+        }
+        SNode<T>* temp = curr->next;
+        curr->next = temp->next;
+        delete temp;
+        Size--;
+    }
+
+    inline void clear()
+    {
+        SNode<T>* curr = head->next;
+        SNode<T>* temp = nullptr;
+        while (Size)
+        {
+            temp = curr->next;
+            delete curr;
+            curr = temp;
+            Size--;
+        }
+        head->next = head;
+        tail = head;
     }
 };

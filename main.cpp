@@ -18,9 +18,27 @@ void print(const Array<int>& arr)
     std::cout << "]" << std::endl;
 }
 
-// List
+// Sngle-linked List
 void print(const SList<int>& list)
 {
+    SNode<int>* node = list.begin();
+    std::cout << "[";
+    for (int i = 0; i < list.size(); i++)
+    {
+        std::cout << node->data;
+        if (i != list.size() - 1)
+        {
+            std::cout << ", ";
+            node = node->next;
+        }
+    }
+    std::cout << "]" << std::endl;
+}
+
+// Sngle-circular-linked List
+void print(const SCList<int>& list)
+{
+    SNode<int>* tempHead = list.headNode();
     SNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
@@ -108,5 +126,24 @@ int main()
     // print(list);
     // list.clear();
     // print(list);
+
+    // Sngle-circular-linked List
+    // SCList<int> list;
+    // list.push_back(2);
+    // print(list);
+    // list.push_front(1);
+    // print(list);
+    // list.push_back(3);
+    // list.pop_front();
+    // print(list);
+    // list.pop_back();
+    // print(list);
+    // list.insert(1, 4);
+    // print(list);
+    // list.remove(1);
+    // print(list);
+    // list.clear();
+    // print(list);
+
     return 0;
 }
