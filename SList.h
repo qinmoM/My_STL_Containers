@@ -460,4 +460,47 @@ public:
         head->next = head;
         tail = head;
     }
+
+    void josephusSort(int k, int m) // O(n * m)
+    {
+        // Check the boundary conditions
+        if (0 >= k || 0 >= m || 1 >= Size)
+        {
+            return;
+        }
+
+        tail->next = head->next;
+        SNode<T>* curr = tail;
+        SNode<T>* last = nullptr;
+        tail = head;
+
+        // Find the kth node
+        while (k > 0)
+        {
+            last = curr;
+            curr = curr->next;
+            k--;
+        }
+
+        // Traverse and move the nodes
+        while (curr != last)
+        {
+            tail->next = curr;
+            tail = curr;
+            last->next = curr->next;
+            curr = last->next;
+            k = 1;
+            while (m > k)
+            {
+                last = curr;
+                curr = curr->next;
+                k++;
+            }
+        }
+
+        // Handle the last node
+        tail->next = curr;
+        curr->next = head;
+        tail = curr;
+    }
 };

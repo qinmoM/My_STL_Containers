@@ -140,6 +140,12 @@ int main()
     // print(list);
     // list.insert(1, 4);
     // print(list);
+    // list.insert(1, 3);
+    // print(list);
+    // list.push_front(1);
+    // print(list);
+    // list.josephusSort(2, 3);
+    // print(list);
     // list.remove(1);
     // print(list);
     // list.clear();
