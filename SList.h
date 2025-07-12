@@ -332,6 +332,10 @@ public:
 
     inline SNode<T>* begin() const
     {
+        if (0 >= Size)
+        {
+            return nullptr;
+        }
         return head->next;
     }
 

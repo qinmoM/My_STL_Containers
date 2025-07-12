@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Array.h"
 #include "SList.h"
+#include "DList.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -40,6 +41,41 @@ void print(const SCList<int>& list)
 {
     SNode<int>* tempHead = list.headNode();
     SNode<int>* node = list.begin();
+    std::cout << "[";
+    for (int i = 0; i < list.size(); i++)
+    {
+        std::cout << node->data;
+        if (i != list.size() - 1)
+        {
+            std::cout << ", ";
+            node = node->next;
+        }
+    }
+    std::cout << "]" << std::endl;
+}
+
+// Double-linked List
+void print(const DList<int>& list)
+{
+    DNode<int>* node = list.begin();
+    std::cout << "[";
+    for (int i = 0; i < list.size(); i++)
+    {
+        std::cout << node->data;
+        if (i != list.size() - 1)
+        {
+            std::cout << ", ";
+            node = node->next;
+        }
+    }
+    std::cout << "]" << std::endl;
+}
+
+// Double-circular-linked List
+void print(const DCList<int>& list)
+{
+    DNode<int>* tempHead = list.headNode();
+    DNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
     {
@@ -151,5 +187,43 @@ int main()
     // list.clear();
     // print(list);
 
+    // Double-linked List
+    // DList<int> list;
+    // list.push_back(2);
+    // print(list);
+    // list.push_front(1);
+    // print(list);
+    // list.push_back(3);
+    // list.pop_front();
+    // print(list);
+    // list.pop_back();
+    // print(list);
+    // list.insert(1, 3);
+    // list.insert(0, 1);
+    // print(list);
+    // list.remove(2);
+    // print(list);
+    // list.clear();
+    // print(list);
+
+    // Double-Circular-linked List
+    DCList<int> list;
+    list.push_back(2);
+    print(list);
+    list.push_front(1);
+    print(list);
+    list.push_back(3);
+    list.pop_front();
+    print(list);
+    list.pop_back();
+    print(list);
+    list.insert(1, 3);
+    print(list);
+    list.insert(0, 1);
+    print(list);
+    list.remove(2);
+    print(list);
+    list.clear();
+    print(list);
     return 0;
 }
