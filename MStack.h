@@ -29,7 +29,7 @@ public:
         return Top;
     }
 
-    void push(const T& value)
+    void push(const T& value) // O(1), but O(n) if expand.
     {
         if (Top == capacity)
         {
@@ -38,7 +38,7 @@ public:
         ptr[Top++] = value;
     }
 
-    void pop()
+    void pop()  // O(1)
     {
         if (0 == Top)
         {
@@ -47,7 +47,7 @@ public:
         --Top;
     }
 
-    T top() const
+    T top() const // O(1)
     {
         if (0 >= Top)
         {
@@ -56,7 +56,7 @@ public:
         return ptr[Top - 1];
     }
 
-    T& top()
+    T& top() // O(1)
     {
         if (0 >= Top)
         {
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    void expand(int newCapacity)
+    void expand(int newCapacity) // O(n)
     {
         T* newPtr = new T[newCapacity];
         for (int i = 0; i < Top; ++i)
@@ -88,4 +88,86 @@ protected:
 //          Linked Stack
 template<class T>
 class LStack
-{};
+{
+public:
+    LStack()
+        : Size(0)
+    {
+        head = new Node();
+    }
+
+    ~LStack()
+    {
+        Node* curr = head;
+        while (curr)
+        {
+            curr = curr->next;
+            delete head;
+            head = curr;
+        }
+    }
+
+public:
+    bool empty() const
+    {
+        return !head->next;
+    }
+
+    int size() const
+    {
+        return Size;
+    }
+
+    void push(T value) // O(1)
+    {
+        Node* newNode = new Node(value);
+        newNode->next = head->next;
+        head->next = newNode;
+        ++Size;
+    }
+
+    void pop() // O(1)
+    {
+        if (Size <= 0)
+        {
+            throw "Stack is empty!";
+        }
+        Node* temp = head->next;
+        head->next = temp->next;
+        delete temp;
+        --Size;
+    }
+
+    T top() const // O(1)
+    {
+        if (nullptr == head->next)
+        {
+            throw "Stack is empty!";
+        }
+        return head->next->data;
+    }
+
+    T& top() // O(1)
+    {
+        if (nullptr == head->next)
+        {
+            throw "Stack is empty!";
+        }
+        return head->next->data;
+    }
+
+protected:
+    struct Node
+    {
+        T data;
+        Node* next;
+
+        Node() : data(T()), next(nullptr) { }
+
+        Node(T data) : data(data), next(nullptr) { }
+    };
+
+    Node* head;
+    int Size;
+
+};

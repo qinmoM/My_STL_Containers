@@ -227,8 +227,21 @@ int main()
     // list.clear();
     // print(list);
 
-    // Stack
-    SStack<int> stack;
+    // Sequential Stack
+    // SStack<int> stack;
+    // stack.push(1);
+    // stack.push(2);
+    // stack.push(3);
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << static_cast<int>(stack.empty()) << std::endl;
+
+    // Linked Stack
+    LStack<int> stack;
     stack.push(1);
     stack.push(2);
     stack.push(3);
@@ -239,5 +252,6 @@ int main()
     std::cout << stack.top() << std::endl;
     stack.pop();
     std::cout << static_cast<int>(stack.empty()) << std::endl;
+
     return 0;
 }
