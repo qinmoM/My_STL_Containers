@@ -2,6 +2,7 @@
 #include "Array.h"
 #include "SList.h"
 #include "DList.h"
+#include "MStack.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -92,7 +93,7 @@ void print(const DCList<int>& list)
 // Main
 int main()
 {
-    // // Array
+    // Array
     // Array<int> arr(1);
     // print(arr);
     // arr.push_back(1);
@@ -207,23 +208,36 @@ int main()
     // print(list);
 
     // Double-Circular-linked List
-    DCList<int> list;
-    list.push_back(2);
-    print(list);
-    list.push_front(1);
-    print(list);
-    list.push_back(3);
-    list.pop_front();
-    print(list);
-    list.pop_back();
-    print(list);
-    list.insert(1, 3);
-    print(list);
-    list.insert(0, 1);
-    print(list);
-    list.remove(2);
-    print(list);
-    list.clear();
-    print(list);
+    // DCList<int> list;
+    // list.push_back(2);
+    // print(list);
+    // list.push_front(1);
+    // print(list);
+    // list.push_back(3);
+    // list.pop_front();
+    // print(list);
+    // list.pop_back();
+    // print(list);
+    // list.insert(1, 3);
+    // print(list);
+    // list.insert(0, 1);
+    // print(list);
+    // list.remove(2);
+    // print(list);
+    // list.clear();
+    // print(list);
+
+    // Stack
+    SStack<int> stack;
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    std::cout << stack.top() << std::endl;
+    stack.pop();
+    std::cout << stack.top() << std::endl;
+    stack.pop();
+    std::cout << stack.top() << std::endl;
+    stack.pop();
+    std::cout << static_cast<int>(stack.empty()) << std::endl;
     return 0;
 }
