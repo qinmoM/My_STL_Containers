@@ -3,6 +3,7 @@
 #include "SList.h"
 #include "DList.h"
 #include "MStack.h"
+#include "MQueue.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -241,17 +242,43 @@ int main()
     // std::cout << static_cast<int>(stack.empty()) << std::endl;
 
     // Linked Stack
-    LStack<int> stack;
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-    std::cout << stack.top() << std::endl;
-    stack.pop();
-    std::cout << stack.top() << std::endl;
-    stack.pop();
-    std::cout << stack.top() << std::endl;
-    stack.pop();
-    std::cout << static_cast<int>(stack.empty()) << std::endl;
+    // LStack<int> stack;
+    // stack.push(1);
+    // stack.push(2);
+    // stack.push(3);
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << stack.top() << std::endl;
+    // stack.pop();
+    // std::cout << static_cast<int>(stack.empty()) << std::endl;
+
+    // Circular Queue
+    // CQueue<int> queue;
+    // for (int i = 0; i < 11; i++)
+    // {
+    //     queue.push(i);
+    // }
+    // std::cout << queue.size() << std::endl;
+    // for (int i = 0; i < 11; i++)
+    // {
+    //     std::cout << queue.front() << std::endl;
+    //     queue.pop();
+    // }
+
+    // Linked Queue
+    // LQueue<int> queue;
+    // for (int i = 0; i < 10; ++i)
+    // {
+    //     queue.push(i);
+    // }
+    // std::cout << queue.size() << std::endl;
+    // for (int i = 0; i < 10; ++i)
+    // {
+    //     std::cout << queue.front() << std::endl;
+    //     queue.pop();
+    // }
 
     return 0;
 }
