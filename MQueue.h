@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+
+// Circular queue
 template<class T>
 class CQueue
 {
@@ -112,6 +115,7 @@ private:
 
 };
 
+// Linked queue
 template<class T>
 class LQueue
 {
@@ -227,5 +231,154 @@ protected:
     Node* head;
     Node* tail;
     int Size;
+
+};
+
+// Priority queue
+template<class T>
+class PriorityQueue
+{
+public:
+    using Compare = std::function<bool(const T&, const T&)>;
+
+    PriorityQueue(int capacity = 20, Compare comparator = std::greater<T>())
+        : Size(0)
+        , capacity(capacity)
+        , comparator(comparator)
+    {
+        arr = new T[capacity];
+    }
+
+    PriorityQueue(Compare comparator)
+        : Size(0)
+        , capacity(20)
+        , comparator(comparator)
+    {
+        arr = new T[capacity];
+    }
+
+    ~PriorityQueue()
+    {
+        delete[] arr;
+        arr = nullptr;
+    }
+
+public:
+    bool empty() const
+    {
+        return 0 == Size;
+    }
+
+    int size() const
+    {
+        return Size;
+    }
+
+    void push(T data)
+    {
+        if (0 == Size)
+        {
+            arr[0] = data;
+        }
+        else
+        {
+            if (Size == capacity)
+            {
+                expand(2 * capacity);
+            }
+            int i = Size;
+            int father = (i - 1) / 2;
+            while (i > 0 && comparator(data, arr[father]))
+            {
+                arr[i] = arr[father];
+                i = father;
+                father = (i - 1) / 2;
+            }
+            arr[i] = data;
+        }
+        ++Size;
+    }
+
+    void pop()
+    {
+        if (0 == Size)
+        {
+            return;
+        }
+
+        --Size;
+
+        T temp = arr[Size];
+        int i = 0;
+        int tempIndex = index(Size, 1, 2);
+        while (tempIndex != -1 && comparator(arr[tempIndex], temp))
+        {
+            arr[i] = arr[tempIndex];
+            i = tempIndex;
+            tempIndex = index(Size, 2 * i + 1, 2 * i + 2);
+        }
+        arr[i] = temp;
+    }
+
+    T top() const
+    {
+        if (0 == Size)
+        {
+            throw "Container is empty! | PriorityQueue::top() const";
+        }
+        return arr[0];
+    }
+
+    T& top()
+    {
+        if (0 == Size)
+        {
+            throw "Container is empty! | PriorityQueue::top()";
+        }
+        return arr[0];
+    }
+
+protected:
+    T* arr;
+    int Size;
+    int capacity;
+    Compare comparator;
+
+private:
+    void expand(int newCapacity)
+    {
+        T* newArr = new T[newCapacity];
+        for (int i = 0; i < Size; ++i)
+        {
+            std::swap(arr[i], newArr[i]);
+            // newArr[i] = arr[i];
+        }
+        delete[] arr;
+        arr = newArr;
+        newArr = nullptr;
+        capacity = newCapacity;
+    }
+
+    int index(int Size, int left, int right)
+    {
+        if (left >= Size)
+        {
+            return -1;
+        }
+
+        if (right >= Size)
+        {
+            return left;
+        }
+
+        if (comparator(arr[left], arr[right]))
+        {
+            return left;
+        }
+        else
+        {
+            return right;
+        }
+    }
 
 };

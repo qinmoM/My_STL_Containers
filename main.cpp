@@ -280,5 +280,22 @@ int main()
     //     queue.pop();
     // }
 
+    // Priority Queue
+    PriorityQueue<int> queue(
+        [](int a, int b) -> bool
+        {
+            return a > b;
+        }
+    );
+    for (int i = 0; i < 30; ++i)
+    {
+        queue.push(i);
+    }
+    while (!queue.empty())
+    {
+        std::cout << queue.top() << std::endl;
+        queue.pop();
+    }
+
     return 0;
 }
