@@ -4,6 +4,7 @@
 #include "DList.h"
 #include "MStack.h"
 #include "MQueue.h"
+#include "Hash.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -89,6 +90,23 @@ void print(const DCList<int>& list)
         }
     }
     std::cout << "]" << std::endl;
+}
+
+void print(ChainingHash<int>& hashTable, int range)
+{
+    bool empty = true;
+    for (int i = 0; i <= range; ++i)
+    {
+        if (hashTable.find(i))
+        {
+            std::cout << i << " : " << hashTable[i] << std::endl;
+            empty = false;
+        }
+    }
+    if (empty)
+    {
+        std::cout << "Hash table is empty" << std::endl;
+    }
 }
 
 // Main
@@ -281,21 +299,48 @@ int main()
     // }
 
     // Priority Queue
-    PriorityQueue<int> queue(
-        [](int a, int b) -> bool
-        {
-            return a > b;
-        }
-    );
-    for (int i = 0; i < 30; ++i)
+    // PriorityQueue<int> queue(
+    //     [](int a, int b) -> bool
+    //     {
+    //         return a > b;
+    //     }
+    // );
+    // for (int i = 0; i < 30; ++i)
+    // {
+    //     queue.push(i);
+    // }
+    // while (!queue.empty())
+    // {
+    //     std::cout << queue.top() << std::endl;
+    //     queue.pop();
+    // }
+
+    // Chaining Hash Table
+    ChainingHash<int> hashTable;
+    hashTable.insert({ 1, 2 });
+    hashTable[0] = 4;
+    hashTable[1] = 5;
+    hashTable.insert({ 2, 6 });
+    hashTable.insert({ 3, 7 });
+    hashTable.insert({ 4, 8 });
+    hashTable.insert({ 5, 9 });
+    hashTable.insert({ 6, 10 });
+    hashTable.insert({ 7, 11 });
+    hashTable.insert({ 8, 12 });
+    hashTable.insert({ 9, 13 });
+    hashTable.insert({ 10, 14 });
+    hashTable.insert({ 11, 15 });
+    hashTable.insert({ 12, 16 });
+    print(hashTable, 12);
+    if (hashTable.count(1))
     {
-        queue.push(i);
+        std::cout << "1 is present" << std::endl;
     }
-    while (!queue.empty())
-    {
-        std::cout << queue.top() << std::endl;
-        queue.pop();
-    }
+    hashTable.erase(9);
+    print(hashTable, 12);
+    hashTable.clear();
+    print(hashTable, 12);
+    
 
     return 0;
 }

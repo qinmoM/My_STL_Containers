@@ -274,7 +274,7 @@ public:
         return Size;
     }
 
-    void push(T data)
+    void push(T data) // O(log n), but O(n) + O(log n) if expand
     {
         if (0 == Size)
         {
@@ -299,7 +299,7 @@ public:
         ++Size;
     }
 
-    void pop()
+    void pop() // O(log n)
     {
         if (0 == Size)
         {
@@ -345,7 +345,7 @@ protected:
     Compare comparator;
 
 private:
-    void expand(int newCapacity)
+    void expand(int newCapacity) // O(n)
     {
         T* newArr = new T[newCapacity];
         for (int i = 0; i < Size; ++i)
@@ -359,7 +359,7 @@ private:
         capacity = newCapacity;
     }
 
-    int index(int Size, int left, int right)
+    int index(int Size, int left, int right) // O(1)
     {
         if (left >= Size)
         {
