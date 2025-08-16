@@ -109,6 +109,23 @@ void print(ChainingHash<int>& hashTable, int range)
     }
 }
 
+void print(OpenHash<int>& hashTable, int range)
+{
+    bool empty = true;
+    for (int i = 0; i <= range; ++i)
+    {
+        if (hashTable.find(i))
+        {
+            std::cout << i << " : " << hashTable[i] << std::endl;
+            empty = false;
+        }
+    }
+    if (empty)
+    {
+        std::cout << "Hash table is empty" << std::endl;
+    }
+}
+
 // Main
 int main()
 {
@@ -316,9 +333,36 @@ int main()
     // }
 
     // Chaining Hash Table
-    ChainingHash<int> hashTable;
+    // ChainingHash<int> hashTable;
+    // hashTable.insert({ 1, 2 });
+    // hashTable[0] = 4;
+    // hashTable[1] = 5;
+    // hashTable.insert({ 2, 6 });
+    // hashTable.insert({ 3, 7 });
+    // hashTable.insert({ 4, 8 });
+    // hashTable.insert({ 5, 9 });
+    // hashTable.insert({ 6, 10 });
+    // hashTable.insert({ 7, 11 });
+    // hashTable.insert({ 8, 12 });
+    // hashTable.insert({ 9, 13 });
+    // hashTable.insert({ 10, 14 });
+    // hashTable.insert({ 11, 15 });
+    // hashTable.insert({ 12, 16 });
+    // print(hashTable, 12);
+    // if (hashTable.count(1))
+    // {
+    //     std::cout << "1 is present" << std::endl;
+    // }
+    // hashTable.erase(9);
+    // print(hashTable, 12);
+    // hashTable.clear();
+    // print(hashTable, 12);
+    
+    // Open Hash Table
+    OpenHash<int> hashTable;
     hashTable.insert({ 1, 2 });
     hashTable[0] = 4;
+    print(hashTable, 1);
     hashTable[1] = 5;
     hashTable.insert({ 2, 6 });
     hashTable.insert({ 3, 7 });
@@ -340,7 +384,6 @@ int main()
     print(hashTable, 12);
     hashTable.clear();
     print(hashTable, 12);
-    
 
     return 0;
 }

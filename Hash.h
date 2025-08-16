@@ -2,12 +2,20 @@
 
 #include <vector>
 #include <list>
+#include <optional>
+
+
 
 template<typename T>
 struct HashNode
 {
     int key;
     T data;
+
+    HashNode()
+        : key(-1)
+        , data(T())
+    { }
 
     HashNode(int key)
         : key(key)
@@ -20,11 +28,180 @@ struct HashNode
     { }
 };
 
+
+
+template<typename T>
 class OpenHash
 {
 public:
+    struct OpenHashNode
+    {
+        std::optional<HashNode<T>> node;
+        bool isDeleted = false;
+
+        OpenHashNode() = default;
+
+    };
+
+public:
+    OpenHash(int capacity = 8, double loadFactor = 0.75)
+        : loadFactor(loadFactor)
+        , numBuckets(capacity)
+        , Size(0)
+    {
+        if (capacity != 8)
+        {
+            int temp = 8;
+            while (capacity > temp)
+            {
+                temp *= 2;
+            }
+            numBuckets = temp;
+        }
+        table.resize(numBuckets, OpenHashNode());
+    }
+
+public:
+    bool empty() const
+    {
+        return !Size;
+    }
+
+    int size() const
+    {
+        return Size;
+    }
+
+    void clear()
+    {
+        Size = 0;
+        table.clear();
+        numBuckets = 8;
+        table.resize(numBuckets, OpenHashNode());
+    }
+
+    HashNode<T>* find(int key)
+    {
+        int index = key & (numBuckets - 1);
+        while (table[index].node.has_value())
+        {
+            if (!table[index].isDeleted && table[index].node->key == key)
+            {
+                return &table[index].node.value();
+            }
+            ++index;
+            if (index == numBuckets)
+            {
+                index = 0;
+            }
+        }
+        return nullptr;
+    }
+
+    int count(int key)
+    {
+        return find(key) ? 1 : 0;
+    }
+
+    void insert(const HashNode<T>& node)
+    {
+        if (find(node.key))
+        {
+            return;
+        }
+        ++Size;
+        int index = node.key & (numBuckets - 1);
+        while (table[index].node.has_value())
+        {
+            if (table[index].isDeleted)
+            {
+                table[index].node = node;
+                table[index].isDeleted = false;
+                return;
+            }
+            ++index;
+            if (index == numBuckets)
+            {
+                index = 0;
+            }
+        }
+        table[index].node = node;
+        rehash();
+    }
+
+    bool erase(int key)
+    {
+        int index = key & (numBuckets - 1);
+        while (table[index].node.has_value())
+        {
+            if (table[index].node->key == key)
+            {
+                --Size;
+                table[index].isDeleted = true;
+                return true;
+            }
+            else
+            {
+                ++index;
+                if (index == numBuckets)
+                {
+                    index = 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    T& operator[](int key)
+    {
+        HashNode<T>* node = find(key);
+        if (node)
+        {
+            return node->data;
+        }
+        else
+        {
+            insert({ key, T() });
+            return find(key)->data;
+        }
+    }
+
+protected:
+    std::vector<OpenHashNode> table;
+    double loadFactor = 0.75;
+    int numBuckets;
+    int Size;
+
+private:
+    void rehash()
+    {
+        if (static_cast<double>(Size) / numBuckets > loadFactor)
+        {
+            numBuckets *= 2;
+            std::vector<OpenHashNode> newTable(numBuckets, OpenHashNode());
+            for (OpenHashNode& temp : table)
+            {
+                if (temp.node.has_value() && !temp.isDeleted)
+                {
+                    int index = temp.node->key & (numBuckets - 1);
+                    while (newTable[index].node.has_value())
+                    {
+                        ++index;
+                        if (index == numBuckets)
+                        {
+                            index = 0;
+                        }
+                    }
+                    newTable[index] = temp;
+                }
+            }
+            table.swap(newTable);
+        }
+    }
 
 };
+
+
 
 template<typename T>
 class ChainingHash
