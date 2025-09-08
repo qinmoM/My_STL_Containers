@@ -5,6 +5,7 @@
 #include "MStack.h"
 #include "MQueue.h"
 #include "Hash.h"
+#include "Tree.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -92,6 +93,7 @@ void print(const DCList<int>& list)
     std::cout << "]" << std::endl;
 }
 
+// Chaining Hash
 void print(ChainingHash<int>& hashTable, int range)
 {
     bool empty = true;
@@ -109,6 +111,7 @@ void print(ChainingHash<int>& hashTable, int range)
     }
 }
 
+// Open Hash
 void print(OpenHash<int>& hashTable, int range)
 {
     bool empty = true;
@@ -359,31 +362,76 @@ int main()
     // print(hashTable, 12);
     
     // Open Hash Table
-    OpenHash<int> hashTable;
-    hashTable.insert({ 1, 2 });
-    hashTable[0] = 4;
-    print(hashTable, 1);
-    hashTable[1] = 5;
-    hashTable.insert({ 2, 6 });
-    hashTable.insert({ 3, 7 });
-    hashTable.insert({ 4, 8 });
-    hashTable.insert({ 5, 9 });
-    hashTable.insert({ 6, 10 });
-    hashTable.insert({ 7, 11 });
-    hashTable.insert({ 8, 12 });
-    hashTable.insert({ 9, 13 });
-    hashTable.insert({ 10, 14 });
-    hashTable.insert({ 11, 15 });
-    hashTable.insert({ 12, 16 });
-    print(hashTable, 12);
-    if (hashTable.count(1))
+    // OpenHash<int> hashTable;
+    // hashTable.insert({ 1, 2 });
+    // hashTable[0] = 4;
+    // print(hashTable, 1);
+    // hashTable[1] = 5;
+    // hashTable.insert({ 2, 6 });
+    // hashTable.insert({ 3, 7 });
+    // hashTable.insert({ 4, 8 });
+    // hashTable.insert({ 5, 9 });
+    // hashTable.insert({ 6, 10 });
+    // hashTable.insert({ 7, 11 });
+    // hashTable.insert({ 8, 12 });
+    // hashTable.insert({ 9, 13 });
+    // hashTable.insert({ 10, 14 });
+    // hashTable.insert({ 11, 15 });
+    // hashTable.insert({ 12, 16 });
+    // print(hashTable, 12);
+    // if (hashTable.count(1))
+    // {
+    //     std::cout << "1 is present" << std::endl;
+    // }
+    // hashTable.erase(9);
+    // print(hashTable, 12);
+    // hashTable.clear();
+    // print(hashTable, 12);
+
+    // BST Tree
+    TreeBST<int> tree;
+    tree.insert(58);
+    tree.insert(24);
+    tree.insert(67);
+    tree.insert(0);
+    tree.insert(34);
+    tree.insert(62);
+    tree.insert(69);
+    tree.insert(5);
+    tree.insert(41);
+    tree.insert(64);
+    tree.insert(78);
+
+    void (*print)(int&) =
+        [](int& data) -> void
+        {
+            std::cout << data << std::endl;
+        }
+    ;
+
+    tree.inorder(print);
+
+    tree.remove(67);
+    tree.remove(62);
+    tree.remove(69);
+    tree.remove(5);
+
+    tree.inorder(print);
+
+    int temp = 58;
+    TreeBST<int>::Node* t = nullptr;
+    if (t = tree.find(temp))
     {
-        std::cout << "1 is present" << std::endl;
+        std::cout << t->data << " is present" << std::endl;
     }
-    hashTable.erase(9);
-    print(hashTable, 12);
-    hashTable.clear();
-    print(hashTable, 12);
+    temp = 69;
+    if (tree.find(temp))
+    {
+        std::cout << temp << " is present" << std::endl;
+    }
+
+    tree.clear();
+    tree.inorder(print);
 
     return 0;
 }
