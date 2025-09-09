@@ -389,49 +389,91 @@ int main()
     // print(hashTable, 12);
 
     // BST Tree
-    TreeBST<int> tree;
-    tree.insert(58);
-    tree.insert(24);
-    tree.insert(67);
-    tree.insert(0);
-    tree.insert(34);
-    tree.insert(62);
-    tree.insert(69);
-    tree.insert(5);
-    tree.insert(41);
-    tree.insert(64);
-    tree.insert(78);
+    // TreeBST<int> tree;
+    // tree.insert(58);
+    // tree.insert(24);
+    // tree.insert(67);
+    // tree.insert(0);
+    // tree.insert(34);
+    // tree.insert(62);
+    // tree.insert(69);
+    // tree.insert(5);
+    // tree.insert(41);
+    // tree.insert(64);
+    // tree.insert(78);
+    //
+    // void (*print)(int&) =
+    //     [](int& data) -> void
+    //     {
+    //         std::cout << data << std::endl;
+    //     }
+    // ;
+    //
+    // tree.inorder(print);
+    //
+    // tree.remove(67);
+    // tree.remove(62);
+    // tree.remove(69);
+    // tree.remove(5);
+    //
+    // tree.inorder(print);
+    //
+    // int temp = 58;
+    // TreeBST<int>::Node* t = nullptr;
+    // if (t = tree.find(temp))
+    // {
+    //     std::cout << t->data << " is present" << std::endl;
+    // }
+    // temp = 69;
+    // if (tree.find(temp))
+    // {
+    //     std::cout << temp << " is present" << std::endl;
+    // }
+    //
+    // tree.clear();
+    // tree.inorder(print);
 
-    void (*print)(int&) =
+    // AVL Tree
+    TreeAVL<int> tree;
+    int arr[] = { 14, 9, 5, 17, 11, 12, 7, 19, 16, 27 };
+    for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
+    {
+        tree.insert(arr[i]);
+    }
+
+    int temp = 12;
+    TreeAVL<int>::Node* it = nullptr;
+    if (it = tree.find(temp))
+    {
+        std::cout << it->data << " is present" << std::endl;
+    }
+
+    temp = 1;
+    if (it = tree.find(temp))
+    {
+        std::cout << it->data << " is present" << std::endl;
+    }
+
+    tree.remove(14);
+    tree.remove(9);
+    tree.remove(5);
+
+    tree.inorder(
         [](int& data) -> void
         {
             std::cout << data << std::endl;
         }
-    ;
-
-    tree.inorder(print);
-
-    tree.remove(67);
-    tree.remove(62);
-    tree.remove(69);
-    tree.remove(5);
-
-    tree.inorder(print);
-
-    int temp = 58;
-    TreeBST<int>::Node* t = nullptr;
-    if (t = tree.find(temp))
-    {
-        std::cout << t->data << " is present" << std::endl;
-    }
-    temp = 69;
-    if (tree.find(temp))
-    {
-        std::cout << temp << " is present" << std::endl;
-    }
+    );
 
     tree.clear();
-    tree.inorder(print);
+
+    std::cout << std::endl;
+    tree.inorder(
+        [](int& data) -> void
+        {
+            std::cout << data << std::endl;
+        }
+    );
 
     return 0;
 }
