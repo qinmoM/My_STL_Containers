@@ -502,3 +502,498 @@ private:
     }
 
 };
+
+
+
+template<class T, class Compare = Myless<T>>
+class TreeRB
+{
+public:
+    constexpr static bool RED = true;
+    constexpr static bool BLACK = false;
+
+    struct Node
+    {
+        Node(const T& value = T())
+            : data(value)
+            , parent(nullptr)
+            , left(nullptr)
+            , right(nullptr)
+            , color(RED)
+        { }
+
+        Node(const T& value, Node* parent, Node* left, Node* right, bool color)
+            : data(value)
+            , parent(parent)
+            , left(left)
+            , right(right)
+            , color(color)
+        { }
+
+        T data;
+        Node* parent;
+        Node* left;
+        Node* right;
+        bool color;
+    };
+
+public:
+    TreeRB(Compare cmp = Myless<T>())
+        : root(nullptr)
+        , Size(0)
+        , cmp(cmp)
+    { }
+
+    TreeRB(Node* root)
+        : root(root)
+        , cmp(Compare())
+        , Size(nodeCount(root))
+    { }
+
+    ~TreeRB()
+    {
+        clear();
+    }
+
+    TreeRB(const TreeRB& other) = delete;
+    TreeRB& operator=(const TreeRB& other) = delete;
+
+public:
+    bool empty() const
+    {
+        return !root;
+    }
+
+    int size() const
+    {
+        return Size;
+    }
+
+    void insert(const T& value)
+    {
+        Node** curr = &root;
+        Node* parent = nullptr;
+        while (*(curr))
+        {
+            if (cmp(value, (*curr)->data))
+            {
+                parent = *curr;
+                curr = &((*curr)->left);
+            }
+            else if (cmp((*curr)->data, value))
+            {
+                parent = *curr;
+                curr = &((*curr)->right);
+            }
+            else
+            {
+                return;
+            }
+        }
+        *curr = new Node(value);
+        (*curr)->parent = parent;
+        ++Size;
+
+        Node* node = *curr;
+        while (parent && parent->color == RED)
+        {
+            Node* grand = parent->parent;
+            if (parent == grand->left)
+            {
+                Node* uncle = grand->right;
+                if (colorOf(uncle) == RED)
+                {
+                    parent->color = BLACK;
+                    uncle->color = BLACK;
+                    grand->color = RED;
+                    parent = grand->parent;
+                    node = grand;
+                }
+                else
+                {
+                    if (node == parent->right)
+                    {
+                        rotateLeft(parent);
+                        parent = node;
+                    }
+                    rotateRight(grand);
+                    parent->color = BLACK;
+                    grand->color = RED;
+                    return;
+                }
+            }
+            else
+            {
+                Node* uncle = grand->left;
+                if (colorOf(uncle) == RED)
+                {
+                    parent->color = BLACK;
+                    uncle->color = BLACK;
+                    grand->color = RED;
+                    parent = grand->parent;
+                    node = grand;
+                }
+                else
+                {
+                    if (node == parent->left)
+                    {
+                        rotateRight(parent);
+                        parent = node;
+                    }
+                    rotateLeft(grand);
+                    parent->color = BLACK;
+                    grand->color = RED;
+                    return;
+                }
+            }
+        }
+        root->color = BLACK;
+        root->parent = nullptr;
+    }
+
+    void remove(const T& value)
+    {
+        Node* curr = root;
+        while (curr)
+        {
+            if (cmp(value, curr->data))
+            {
+                curr = curr->left;
+            }
+            else if (cmp(curr->data, value))
+            {
+                curr = curr->right;
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (!curr)
+        {
+            return;
+        }
+        --Size;
+
+        if (curr->left && curr->right)
+        {
+            Node* temp = curr->right;
+            while (temp->left)
+            {
+                temp = temp->left;
+            }
+            curr->data = temp->data;
+            curr = temp;
+        }
+
+        if (curr->left || curr->right)
+        {
+            Node* child = curr->left ? curr->left : curr->right;
+            if (root == curr)
+            {
+                root = child;
+                child->parent = nullptr;
+                child->color = BLACK;
+                delete curr;
+                return;
+            }
+            if (curr->left)
+            {
+                if (curr->parent->left == curr)
+                {
+                    curr->parent->left = child;
+                }
+                else
+                {
+                    curr->parent->right = child;
+                }
+                child->parent = curr->parent;
+                child->color = BLACK;
+                delete curr;
+                return;
+            }
+            else
+            {
+                if (curr->parent->left == curr)
+                {
+                    curr->parent->left = child;
+                }
+                else
+                {
+                    curr->parent->right = child;
+                }
+                child->parent = curr->parent;
+                child->color = BLACK;
+                delete curr;
+                return;
+            }
+        }
+
+        if (root == curr)
+        {
+            delete curr;
+            root = nullptr;
+            return;
+        }
+
+        bool needDelete = true;
+        if (RED == colorOf(curr))
+        {
+            if (curr->parent->left == curr)
+            {
+                curr->parent->left = nullptr;
+            }
+            else
+            {
+                curr->parent->right = nullptr;
+            }
+            delete curr;
+            return;
+        }
+
+        while (true)
+        {
+            Node* parent = curr->parent;
+            Node* sister = (parent->left == curr) ? parent->right : parent->left;
+            if (RED == colorOf(sister))
+            {
+                parent->color = RED;
+                sister->color = BLACK;
+                if (parent->left == curr)
+                {
+                    rotateLeft(parent);
+                }
+                else
+                {
+                    rotateRight(parent);
+                }
+            }
+            else
+            {
+                if ((BLACK == colorOf(sister->left)) && (BLACK == colorOf(sister->right)))
+                {
+                    sister->color = RED;
+                    if (RED == parent->color || root == parent)
+                    {
+                        if (RED == parent->color)
+                        {
+                            parent->color = BLACK;
+                        }
+                        if (needDelete)
+                        {
+                            if (parent->left == curr)
+                            {
+                                parent->left = nullptr;
+                            }
+                            else
+                            {
+                                parent->right = nullptr;
+                            }
+                            delete curr;
+                        }
+                        return;
+                    }
+                    if (parent->left == curr)
+                    {
+                        parent->left = nullptr;
+                    }
+                    else
+                    {
+                        parent->right = nullptr;
+                    }
+                    delete curr;
+                    needDelete = false;
+                    curr = parent;
+                }
+                else
+                {
+                    if (parent->left == sister)
+                    {
+                        if (RED == colorOf(sister->left))
+                        {
+                            sister->color = parent->color;
+                            parent->color = BLACK;
+                            sister->left->color = BLACK;
+                        }
+                        else
+                        {
+                            sister->right->color = parent->color;
+                            parent->color = BLACK;
+                            rotateLeft(sister);
+                        }
+                        rotateRight(parent);
+                        if (needDelete)
+                        {
+                            parent->right = nullptr;
+                            delete curr;
+                        }
+                    }
+                    else
+                    {
+                        if (RED == colorOf(sister->right))
+                        {
+                            sister->color = parent->color;
+                            parent->color = BLACK;
+                            sister->right->color = BLACK;
+                        }
+                        else
+                        {
+                            sister->left->color = parent->color;
+                            parent->color = BLACK;
+                            rotateRight(sister);
+                        }
+                        rotateLeft(parent);
+                        if (needDelete)
+                        {
+                            parent->left = nullptr;
+                            delete curr;
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
+    Node* find(const T& value)
+    {
+        Node* temp = root;
+        while (temp)
+        {
+            if (cmp(value, temp->data))
+            {
+                temp = temp->left;
+            }
+            else if (cmp(temp->data, value))
+            {
+                temp = temp->right;
+            }
+            else
+            {
+                return temp;
+            }
+        }
+        return nullptr;
+    }
+
+    template<typename Func>
+    void inorder(Func visit)
+    {
+        inorder(root, visit);
+    }
+
+    void clear()
+    {
+        del(root);
+        root = nullptr;
+        Size = 0;
+    }
+
+protected:
+    Node* root;
+    int Size;
+    Compare cmp;
+
+private:
+    int nodeCount(Node* node) const
+    {
+        if (!node)
+        {
+            return 0;
+        }
+        return 1 + nodeCount(node->left) + nodeCount(node->right);
+    }
+
+    template<typename Func>
+    void inorder(Node* node, Func visit)
+    {
+        if (node)
+        {
+            inorder(node->left, visit);
+            visit(node->data);
+            inorder(node->right, visit);
+        }
+    }
+
+    void rotateRight(Node* node)
+    {
+        Node* left = node->left;
+
+        node->left = left->right;
+        if (left->right)
+        {
+            left->right->parent = node;
+        }
+        
+        if (root == node)
+        {
+            root = left;
+            left->right = node;
+            node->parent = left;
+            root->parent = nullptr;
+            return;
+        }
+
+        left->parent = node->parent;
+        if (node->parent->left == node)
+        {
+            left->parent->left = left;
+        }
+        else
+        {
+            left->parent->right = left;
+        }
+
+        left->right = node;
+        node->parent = left;
+    }
+
+    void rotateLeft(Node* node)
+    {
+        Node* right = node->right;
+
+        node->right = right->left;
+        if (right->left)
+        {
+            right->left->parent = node;
+        }
+
+        if (root == node)
+        {
+            root = right;
+            right->left = node;
+            node->parent = right;
+            root->parent = nullptr;
+            return;
+        }
+
+        right->parent = node->parent;
+        if (node->parent->left == node)
+        {
+            right->parent->left = right;
+        }
+        else
+        {
+            right->parent->right = right;
+        }
+
+        right->left = node;
+        node->parent = right;
+    }
+
+    bool colorOf(Node* node)
+    {
+        return node ? node->color : BLACK;
+    }
+
+    void del(Node* node)
+    {
+        if (node)
+        {
+            del(node->left);
+            del(node->right);
+            delete node;
+        }
+    }
+
+};

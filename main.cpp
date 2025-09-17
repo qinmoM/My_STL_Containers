@@ -434,46 +434,87 @@ int main()
     // tree.inorder(print);
 
     // AVL Tree
-    TreeAVL<int> tree;
-    int arr[] = { 14, 9, 5, 17, 11, 12, 7, 19, 16, 27 };
+    // TreeAVL<int> tree;
+    // int arr[] = { 14, 9, 5, 17, 11, 12, 7, 19, 16, 27 };
+    // for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
+    // {
+    //     tree.insert(arr[i]);
+    // }
+    //
+    // int temp = 12;
+    // TreeAVL<int>::Node* it = nullptr;
+    // if (it = tree.find(temp))
+    // {
+    //     std::cout << it->data << " is present" << std::endl;
+    // }
+    //
+    // temp = 1;
+    // if (it = tree.find(temp))
+    // {
+    //     std::cout << it->data << " is present" << std::endl;
+    // }
+    //
+    // tree.remove(14);
+    // tree.remove(9);
+    // tree.remove(5);
+    //
+    // tree.inorder(
+    //     [](int& data) -> void
+    //     {
+    //         std::cout << data << std::endl;
+    //     }
+    // );
+    //
+    // tree.clear();
+    //
+    // std::cout << std::endl;
+    // tree.inorder(
+    //     [](int& data) -> void
+    //     {
+    //         std::cout << data << std::endl;
+    //     }
+    // );
+
+    // Red_Black Tree
+    TreeRB<int> tree;
+    int arr[] = { 17, 18, 23, 34, 27, 15, 9, 6, 8, 5, 25 };
+
     for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
     {
         tree.insert(arr[i]);
     }
 
-    int temp = 12;
-    TreeAVL<int>::Node* it = nullptr;
-    if (it = tree.find(temp))
-    {
-        std::cout << it->data << " is present" << std::endl;
-    }
-
-    temp = 1;
-    if (it = tree.find(temp))
-    {
-        std::cout << it->data << " is present" << std::endl;
-    }
-
-    tree.remove(14);
-    tree.remove(9);
-    tree.remove(5);
-
-    tree.inorder(
+    void (*print)(int&) =
         [](int& data) -> void
         {
             std::cout << data << std::endl;
         }
-    );
+    ;
+
+    tree.inorder(print);
 
     tree.clear();
+    tree.inorder(print);
 
-    std::cout << std::endl;
-    tree.inorder(
-        [](int& data) -> void
-        {
-            std::cout << data << std::endl;
-        }
-    );
+    TreeRB<int>::Node* tree2 = new TreeRB<int>::Node(15, nullptr, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->left = new TreeRB<int>::Node(9, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->right = new TreeRB<int>::Node(18, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->left->left = new TreeRB<int>::Node(6, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->left->right = new TreeRB<int>::Node(13, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->left->right->left = new TreeRB<int>::Node(10, tree2->left->right, nullptr, nullptr, TreeRB<int>::RED);
+    tree2->right->left = new TreeRB<int>::Node(17, tree2->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->right->right = new TreeRB<int>::Node(27, tree2->right, nullptr, nullptr, TreeRB<int>::RED);
+    tree2->right->right->left = new TreeRB<int>::Node(23, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->right->right->right = new TreeRB<int>::Node(34, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    tree2->right->right->right->right = new TreeRB<int>::Node(37, tree2->right->right->right, nullptr, nullptr, TreeRB<int>::RED);
+    tree2->right->right->left->right = new TreeRB<int>::Node(25, tree2->right->right->left, nullptr, nullptr, TreeRB<int>::RED);
+    TreeRB<int> treeTemp(tree2);
+    int arr2[] = { 18, 25, 15, 6, 13, 37, 27, 17, 34, 9, 10, 23 };
+
+    for (int i = 0; i < sizeof(arr2) / sizeof(int); ++i)
+    {
+        treeTemp.remove(arr2[i]);
+    }
 
     return 0;
 }
