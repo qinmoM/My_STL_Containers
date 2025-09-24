@@ -6,6 +6,7 @@
 #include "MQueue.h"
 #include "Hash.h"
 #include "Tree.h"
+#include "TrieTree.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -476,45 +477,76 @@ int main()
     // );
 
     // Red_Black Tree
-    TreeRB<int> tree;
-    int arr[] = { 17, 18, 23, 34, 27, 15, 9, 6, 8, 5, 25 };
+    // TreeRB<int> tree;
+    // int arr[] = { 17, 18, 23, 34, 27, 15, 9, 6, 8, 5, 25 };
+    //
+    // for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
+    // {
+    //     tree.insert(arr[i]);
+    // }
+    //
+    // void (*print)(int&) =
+    //     [](int& data) -> void
+    //     {
+    //         std::cout << data << std::endl;
+    //     }
+    // ;
+    //
+    // tree.inorder(print);
+    //
+    // tree.clear();
+    // tree.inorder(print);
+    //
+    // TreeRB<int>::Node* tree2 = new TreeRB<int>::Node(15, nullptr, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->left = new TreeRB<int>::Node(9, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->right = new TreeRB<int>::Node(18, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->left->left = new TreeRB<int>::Node(6, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->left->right = new TreeRB<int>::Node(13, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->left->right->left = new TreeRB<int>::Node(10, tree2->left->right, nullptr, nullptr, TreeRB<int>::RED);
+    // tree2->right->left = new TreeRB<int>::Node(17, tree2->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->right->right = new TreeRB<int>::Node(27, tree2->right, nullptr, nullptr, TreeRB<int>::RED);
+    // tree2->right->right->left = new TreeRB<int>::Node(23, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->right->right->right = new TreeRB<int>::Node(34, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
+    // tree2->right->right->right->right = new TreeRB<int>::Node(37, tree2->right->right->right, nullptr, nullptr, TreeRB<int>::RED);
+    // tree2->right->right->left->right = new TreeRB<int>::Node(25, tree2->right->right->left, nullptr, nullptr, TreeRB<int>::RED);
+    // TreeRB<int> treeTemp(tree2);
+    // int arr2[] = { 18, 25, 15, 6, 13, 37, 27, 17, 34, 9, 10, 23 };
+    //
+    // for (int i = 0; i < sizeof(arr2) / sizeof(int); ++i)
+    // {
+    //     treeTemp.remove(arr2[i]);
+    // }
 
-    for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
-    {
-        tree.insert(arr[i]);
-    }
+    // Trie Tree
+    TrieTree trie;
+    trie.add("hello");
+    trie.add("hello");
+    trie.add("hel");
+    trie.add("he");
+    trie.add("world");
+    trie.add("word");
+    std::cout << "hello : " << trie.query("hello") << std::endl;
+    std::cout << "hel : " << trie.query("hel") << std::endl;
 
-    void (*print)(int&) =
-        [](int& data) -> void
+    trie.preOrder(
+        [](const std::string& str) -> void
         {
-            std::cout << data << std::endl;
+            std::cout << str << std::endl;
         }
-    ;
+    );
 
-    tree.inorder(print);
-
-    tree.clear();
-    tree.inorder(print);
-
-    TreeRB<int>::Node* tree2 = new TreeRB<int>::Node(15, nullptr, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->left = new TreeRB<int>::Node(9, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->right = new TreeRB<int>::Node(18, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->left->left = new TreeRB<int>::Node(6, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->left->right = new TreeRB<int>::Node(13, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->left->right->left = new TreeRB<int>::Node(10, tree2->left->right, nullptr, nullptr, TreeRB<int>::RED);
-    tree2->right->left = new TreeRB<int>::Node(17, tree2->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->right->right = new TreeRB<int>::Node(27, tree2->right, nullptr, nullptr, TreeRB<int>::RED);
-    tree2->right->right->left = new TreeRB<int>::Node(23, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->right->right->right = new TreeRB<int>::Node(34, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    tree2->right->right->right->right = new TreeRB<int>::Node(37, tree2->right->right->right, nullptr, nullptr, TreeRB<int>::RED);
-    tree2->right->right->left->right = new TreeRB<int>::Node(25, tree2->right->right->left, nullptr, nullptr, TreeRB<int>::RED);
-    TreeRB<int> treeTemp(tree2);
-    int arr2[] = { 18, 25, 15, 6, 13, 37, 27, 17, 34, 9, 10, 23 };
-
-    for (int i = 0; i < sizeof(arr2) / sizeof(int); ++i)
-    {
-        treeTemp.remove(arr2[i]);
-    }
+    trie.remove("hello");
+    std::cout << "hello : " << trie.query("hello") << std::endl;
+        trie.preOrder(
+        [](const std::string& str) -> void
+        {
+            std::cout << str << std::endl;
+        }
+    );
+    trie.remove("hel");
+    trie.remove("he");
+    trie.remove("world");
+    trie.remove("word");
 
     return 0;
 }
