@@ -7,6 +7,7 @@
 #include "Hash.h"
 #include "Tree.h"
 #include "TrieTree.h"
+#include "SkipList.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -518,35 +519,62 @@ int main()
     // }
 
     // Trie Tree
-    TrieTree trie;
-    trie.add("hello");
-    trie.add("hello");
-    trie.add("hel");
-    trie.add("he");
-    trie.add("world");
-    trie.add("word");
-    std::cout << "hello : " << trie.query("hello") << std::endl;
-    std::cout << "hel : " << trie.query("hel") << std::endl;
+    // TrieTree trie;
+    // trie.add("hello");
+    // trie.add("hello");
+    // trie.add("hel");
+    // trie.add("he");
+    // trie.add("world");
+    // trie.add("word");
+    // std::cout << "hello : " << trie.query("hello") << std::endl;
+    // std::cout << "hel : " << trie.query("hel") << std::endl;
+    //
+    // trie.preOrder(
+    //     [](const std::string& str) -> void
+    //     {
+    //         std::cout << str << std::endl;
+    //     }
+    // );
+    //
+    // trie.remove("hello");
+    // std::cout << "hello : " << trie.query("hello") << std::endl;
+    //     trie.preOrder(
+    //     [](const std::string& str) -> void
+    //     {
+    //         std::cout << str << std::endl;
+    //     }
+    // );
+    // trie.remove("hel");
+    // trie.remove("he");
+    // trie.remove("world");
+    // trie.remove("word");
 
-    trie.preOrder(
-        [](const std::string& str) -> void
-        {
-            std::cout << str << std::endl;
-        }
-    );
-
-    trie.remove("hello");
-    std::cout << "hello : " << trie.query("hello") << std::endl;
-        trie.preOrder(
-        [](const std::string& str) -> void
-        {
-            std::cout << str << std::endl;
-        }
-    );
-    trie.remove("hel");
-    trie.remove("he");
-    trie.remove("world");
-    trie.remove("word");
+    // Skip List
+    SkipList<int, int> sl;
+    sl.insert(3, 30);
+    sl.insert(6, 60);
+    sl.insert(7, 70);
+    sl.insert(1, 10);
+    sl.insert(2, 20);
+    sl.insert(9, 90);
+    sl.insert(8, 80);
+    sl.insert(5, 50);
+    sl.insert(4, 40);
+    std::cout << "1 : " << sl.find(1)->value << std::endl;
+    std::cout << "2 : " << sl.find(2)->value << std::endl;
+    std::cout << "3 : " << sl.find(3)->value << std::endl;
+    std::cout << "4 : " << sl.find(4)->value << std::endl;
+    std::cout << "5 : " << sl.find(5)->value << std::endl;
+    std::cout << "6 : " << sl.find(6)->value << std::endl;
+    std::cout << "7 : " << sl.find(7)->value << std::endl;
+    std::cout << "8 : " << sl.find(8)->value << std::endl;
+    std::cout << "9 : " << sl.find(9)->value << std::endl;
+    sl.remove(1);
+    sl.remove(2);
+    sl.remove(3);
+    sl.remove(4);
+    sl.remove(5);
+    sl.clear();
 
     return 0;
 }
