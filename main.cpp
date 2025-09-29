@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 #include "Array.h"
 #include "SList.h"
 #include "DList.h"
@@ -8,6 +9,7 @@
 #include "Tree.h"
 #include "TrieTree.h"
 #include "SkipList.h"
+#include "ConsistentHash.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -128,6 +130,25 @@ void print(OpenHash<int>& hashTable, int range)
     if (empty)
     {
         std::cout << "Hash table is empty" << std::endl;
+    }
+}
+
+void print(std::vector<std::string>& keys, ConsistentHash& ch)
+{
+    std::unordered_map<std::string, std::list<std::string>> map;
+    for (const std::string& ip : keys)
+    {
+        map[ch.getHost(ip)].emplace_back(ip);
+    }
+
+    for (const std::pair<std::string, std::list<std::string>>& p : map)
+    {
+        std::cout << p.first << " : " << std::endl;
+        for (const std::string& IPtemp : p.second)
+        {
+            std::cout << "\n" << IPtemp;
+        }
+        std::cout << std::endl << "------------------------" << std::endl;
     }
 }
 
@@ -550,31 +571,61 @@ int main()
     // trie.remove("word");
 
     // Skip List
-    SkipList<int, int> sl;
-    sl.insert(3, 30);
-    sl.insert(6, 60);
-    sl.insert(7, 70);
-    sl.insert(1, 10);
-    sl.insert(2, 20);
-    sl.insert(9, 90);
-    sl.insert(8, 80);
-    sl.insert(5, 50);
-    sl.insert(4, 40);
-    std::cout << "1 : " << sl.find(1)->value << std::endl;
-    std::cout << "2 : " << sl.find(2)->value << std::endl;
-    std::cout << "3 : " << sl.find(3)->value << std::endl;
-    std::cout << "4 : " << sl.find(4)->value << std::endl;
-    std::cout << "5 : " << sl.find(5)->value << std::endl;
-    std::cout << "6 : " << sl.find(6)->value << std::endl;
-    std::cout << "7 : " << sl.find(7)->value << std::endl;
-    std::cout << "8 : " << sl.find(8)->value << std::endl;
-    std::cout << "9 : " << sl.find(9)->value << std::endl;
-    sl.remove(1);
-    sl.remove(2);
-    sl.remove(3);
-    sl.remove(4);
-    sl.remove(5);
-    sl.clear();
+    // SkipList<int, int> sl;
+    // sl.insert(3, 30);
+    // sl.insert(6, 60);
+    // sl.insert(7, 70);
+    // sl.insert(1, 10);
+    // sl.insert(2, 20);
+    // sl.insert(9, 90);
+    // sl.insert(8, 80);
+    // sl.insert(5, 50);
+    // sl.insert(4, 40);
+    // std::cout << "1 : " << sl.find(1)->value << std::endl;
+    // std::cout << "2 : " << sl.find(2)->value << std::endl;
+    // std::cout << "3 : " << sl.find(3)->value << std::endl;
+    // std::cout << "4 : " << sl.find(4)->value << std::endl;
+    // std::cout << "5 : " << sl.find(5)->value << std::endl;
+    // std::cout << "6 : " << sl.find(6)->value << std::endl;
+    // std::cout << "7 : " << sl.find(7)->value << std::endl;
+    // std::cout << "8 : " << sl.find(8)->value << std::endl;
+    // std::cout << "9 : " << sl.find(9)->value << std::endl;
+    // sl.remove(1);
+    // sl.remove(2);
+    // sl.remove(3);
+    // sl.remove(4);
+    // sl.remove(5);
+    // sl.clear();
+
+    // Consistent Hash
+    PhysicalHost host1("10.117.124.10", 150);
+    PhysicalHost host2("10.117.124.20", 150);
+    PhysicalHost host3("10.117.124.30", 600);
+
+    ConsistentHash ch;
+    ch.addHost(host1);
+    ch.addHost(host2);
+    ch.addHost(host3);
+
+    std::vector<std::string> keys = { 
+        "192.168.1.123",
+        "192.168.1.12",
+        "192.168.1.11",
+        "192.168.1.13",
+        "192.168.1.14",
+        "192.168.1.121",
+        "192.168.1.131",
+        "192.168.1.31",
+        "192.168.1.41",
+        "192.168.1.56",
+        "192.168.1.77",
+    };
+
+    print(keys, ch);
+
+    ch.removeHost(host2);
+
+    print(keys, ch);
 
     return 0;
 }
