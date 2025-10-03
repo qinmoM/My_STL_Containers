@@ -10,6 +10,7 @@
 #include "TrieTree.h"
 #include "SkipList.h"
 #include "ConsistentHash.h"
+#include "Huffman.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -598,34 +599,43 @@ int main()
     // sl.clear();
 
     // Consistent Hash
-    PhysicalHost host1("10.117.124.10", 150);
-    PhysicalHost host2("10.117.124.20", 150);
-    PhysicalHost host3("10.117.124.30", 600);
+    // PhysicalHost host1("10.117.124.10", 150);
+    // PhysicalHost host2("10.117.124.20", 150);
+    // PhysicalHost host3("10.117.124.30", 600);
+    //
+    // ConsistentHash ch;
+    // ch.addHost(host1);
+    // ch.addHost(host2);
+    // ch.addHost(host3);
+    //
+    // std::vector<std::string> keys = { 
+    //     "192.168.1.123",
+    //     "192.168.1.12",
+    //     "192.168.1.11",
+    //     "192.168.1.13",
+    //     "192.168.1.14",
+    //     "192.168.1.121",
+    //     "192.168.1.131",
+    //     "192.168.1.31",
+    //     "192.168.1.41",
+    //     "192.168.1.56",
+    //     "192.168.1.77",
+    // };
+    //
+    // print(keys, ch);
+    //
+    // ch.removeHost(host2);
+    //
+    // print(keys, ch);
 
-    ConsistentHash ch;
-    ch.addHost(host1);
-    ch.addHost(host2);
-    ch.addHost(host3);
-
-    std::vector<std::string> keys = { 
-        "192.168.1.123",
-        "192.168.1.12",
-        "192.168.1.11",
-        "192.168.1.13",
-        "192.168.1.14",
-        "192.168.1.121",
-        "192.168.1.131",
-        "192.168.1.31",
-        "192.168.1.41",
-        "192.168.1.56",
-        "192.168.1.77",
-    };
-
-    print(keys, ch);
-
-    ch.removeHost(host2);
-
-    print(keys, ch);
+    // Huffman
+    std::string text = "ABCDDDDDCC";
+    Huffman huffman;
+    huffman.create(text);
+    std::string encoded = huffman.encode(text);
+    std::cout << "Encoded string: " << encoded << std::endl;
+    std::string decoded = huffman.decode(encoded);
+    std::cout << "Decoded string: " << decoded << std::endl;
 
     return 0;
 }
