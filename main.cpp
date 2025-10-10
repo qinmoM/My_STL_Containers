@@ -11,6 +11,7 @@
 #include "SkipList.h"
 #include "ConsistentHash.h"
 #include "Huffman.h"
+#include "DSU.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -629,13 +630,24 @@ int main()
     // print(keys, ch);
 
     // Huffman
-    std::string text = "ABCDDDDDCC";
-    Huffman huffman;
-    huffman.create(text);
-    std::string encoded = huffman.encode(text);
-    std::cout << "Encoded string: " << encoded << std::endl;
-    std::string decoded = huffman.decode(encoded);
-    std::cout << "Decoded string: " << decoded << std::endl;
+    // std::string text = "ABCDDDDDCC";
+    // Huffman huffman;
+    // huffman.create(text);
+    // std::string encoded = huffman.encode(text);
+    // std::cout << "Encoded string: " << encoded << std::endl;
+    // std::string decoded = huffman.decode(encoded);
+    // std::cout << "Decoded string: " << decoded << std::endl;
+
+    // disjoint set union
+    std::vector<std::vector<int>> sets = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    DSU dsu(sets);
+    std::cout << dsu.find(1) << std::endl;
+    std::cout << dsu.find(4) << std::endl;
+    std::cout << dsu.find(7) << std::endl;
+    dsu.merge(1, 4);
+    std::cout << dsu.find(1) << std::endl;
+    std::cout << dsu.find(4) << std::endl;
+    std::cout << dsu.find(7) << std::endl;
 
     return 0;
 }
