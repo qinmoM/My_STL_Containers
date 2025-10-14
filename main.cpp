@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unordered_map>
 #include "Array.h"
 #include "SList.h"
 #include "DList.h"
@@ -12,6 +11,7 @@
 #include "ConsistentHash.h"
 #include "Huffman.h"
 #include "DSU.h"
+#include "Graph.h"
 
 // Array
 void print(const Array<int>& arr)
@@ -135,6 +135,7 @@ void print(OpenHash<int>& hashTable, int range)
     }
 }
 
+// Consistent Hash
 void print(std::vector<std::string>& keys, ConsistentHash& ch)
 {
     std::unordered_map<std::string, std::list<std::string>> map;
@@ -153,6 +154,15 @@ void print(std::vector<std::string>& keys, ConsistentHash& ch)
         std::cout << std::endl << "------------------------" << std::endl;
     }
 }
+
+// Graph
+struct printFunc
+{
+    void operator()(const std::string& name) const
+    {
+        std::cout << name << std::endl;
+    }
+};
 
 // Main
 int main()
@@ -639,15 +649,45 @@ int main()
     // std::cout << "Decoded string: " << decoded << std::endl;
 
     // disjoint set union
-    std::vector<std::vector<int>> sets = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-    DSU dsu(sets);
-    std::cout << dsu.find(1) << std::endl;
-    std::cout << dsu.find(4) << std::endl;
-    std::cout << dsu.find(7) << std::endl;
-    dsu.merge(1, 4);
-    std::cout << dsu.find(1) << std::endl;
-    std::cout << dsu.find(4) << std::endl;
-    std::cout << dsu.find(7) << std::endl;
+    // std::vector<std::vector<int>> sets = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    // DSU dsu(sets);
+    // std::cout << dsu.find(1) << std::endl;
+    // std::cout << dsu.find(4) << std::endl;
+    // std::cout << dsu.find(7) << std::endl;
+    // dsu.merge(1, 4);
+    // std::cout << dsu.find(1) << std::endl;
+    // std::cout << dsu.find(4) << std::endl;
+    // std::cout << dsu.find(7) << std::endl;
+
+    // Graph
+    std::unique_ptr<Graph> graph = std::make_unique<Graph>();
+    graph->add("A");
+    graph->add("B");
+    graph->add("C");
+    graph->add("D");
+    graph->addEdge("A", "B");
+    graph->addEdge("A", "C");
+    graph->addEdge("B", "D");
+    graph->addEdge("C", "D");
+    printFunc p;
+    std::cout << "BFS : " << std::endl;
+    graph->bfs("A", p);
+    std::cout << std::endl;
+    graph->bfs("B", p);
+    std::cout << std::endl;
+    graph->bfs("C", p);
+    std::cout << std::endl;
+    graph->bfs("D", p);
+    std::cout << std::endl;
+    std::cout << "DFS : " << std::endl;
+    graph->dfs("A", p);
+    std::cout << std::endl;
+    graph->dfs("B", p);
+    std::cout << std::endl;
+    graph->dfs("C", p);
+    std::cout << std::endl;
+    graph->dfs("D", p);
+    std::cout << std::endl;
 
     return 0;
 }
