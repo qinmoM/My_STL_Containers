@@ -660,34 +660,48 @@ int main()
     // std::cout << dsu.find(7) << std::endl;
 
     // Graph
-    std::unique_ptr<Graph> graph = std::make_unique<Graph>();
-    graph->add("A");
-    graph->add("B");
-    graph->add("C");
-    graph->add("D");
-    graph->addEdge("A", "B");
-    graph->addEdge("A", "C");
-    graph->addEdge("B", "D");
-    graph->addEdge("C", "D");
-    printFunc p;
-    std::cout << "BFS : " << std::endl;
-    graph->bfs("A", p);
-    std::cout << std::endl;
-    graph->bfs("B", p);
-    std::cout << std::endl;
-    graph->bfs("C", p);
-    std::cout << std::endl;
-    graph->bfs("D", p);
-    std::cout << std::endl;
-    std::cout << "DFS : " << std::endl;
-    graph->dfs("A", p);
-    std::cout << std::endl;
-    graph->dfs("B", p);
-    std::cout << std::endl;
-    graph->dfs("C", p);
-    std::cout << std::endl;
-    graph->dfs("D", p);
-    std::cout << std::endl;
+    // std::unique_ptr<Graph> graph = std::make_unique<Graph>();
+    // graph->add("A");
+    // graph->add("B");
+    // graph->add("C");
+    // graph->add("D");
+    // graph->addEdge("A", "B");
+    // graph->addEdge("A", "C");
+    // graph->addEdge("B", "D");
+    // graph->addEdge("C", "D");
+    // printFunc p;
+    // std::cout << "BFS : " << std::endl;
+    // graph->bfs("A", p);
+    // std::cout << std::endl;
+    // graph->bfs("B", p);
+    // std::cout << std::endl;
+    // graph->bfs("C", p);
+    // std::cout << std::endl;
+    // graph->bfs("D", p);
+    // std::cout << std::endl;
+    // std::cout << "DFS : " << std::endl;
+    // graph->dfs("A", p);
+    // std::cout << std::endl;
+    // graph->dfs("B", p);
+    // std::cout << std::endl;
+    // graph->dfs("C", p);
+    // std::cout << std::endl;
+    // graph->dfs("D", p);
+    // std::cout << std::endl;
+
+    // Kruskal
+    GraphEdge edge;
+    edge.addEdge(1, 2, 6);
+    edge.addEdge(1, 3, 1);
+    edge.addEdge(2, 3, 5);
+    edge.addEdge(1, 4, 5);
+    edge.addEdge(3, 4, 5);
+    edge.addEdge(2, 5, 3);
+    edge.addEdge(3, 5, 6);
+    edge.addEdge(3, 6, 4);
+    edge.addEdge(5, 6, 6);
+    edge.addEdge(4, 6, 2);
+    std::vector<GraphEdge::Edge> mst = edge.kruskal();
 
     return 0;
 }
