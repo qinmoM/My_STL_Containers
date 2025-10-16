@@ -690,18 +690,31 @@ int main()
     // std::cout << std::endl;
 
     // Kruskal
-    GraphEdge edge;
-    edge.addEdge(1, 2, 6);
-    edge.addEdge(1, 3, 1);
-    edge.addEdge(2, 3, 5);
-    edge.addEdge(1, 4, 5);
-    edge.addEdge(3, 4, 5);
-    edge.addEdge(2, 5, 3);
-    edge.addEdge(3, 5, 6);
-    edge.addEdge(3, 6, 4);
-    edge.addEdge(5, 6, 6);
-    edge.addEdge(4, 6, 2);
-    std::vector<GraphEdge::Edge> mst = edge.kruskal();
+    // GraphEdge edge;
+    // edge.addEdge(1, 2, 6);
+    // edge.addEdge(1, 3, 1);
+    // edge.addEdge(2, 3, 5);
+    // edge.addEdge(1, 4, 5);
+    // edge.addEdge(3, 4, 5);
+    // edge.addEdge(2, 5, 3);
+    // edge.addEdge(3, 5, 6);
+    // edge.addEdge(3, 6, 4);
+    // edge.addEdge(5, 6, 6);
+    // edge.addEdge(4, 6, 2);
+    // std::vector<GraphEdge::Edge> mst = edge.kruskal();
+
+    // Dijkstra
+    int INF = GraphMatrix::INF;
+    std::vector<std::vector<int>> mat = {
+        {   0,   6,   3, INF, INF, INF },
+        {   6,   0,   2,   5, INF, INF },
+        {   3,   2,   0,   3,   4, INF },
+        { INF,   5,   3,   0,   2,   3 },
+        { INF, INF,   4,   2,   0,   5 },
+        { INF, INF, INF,   3,   5,   0 }
+    };
+    GraphMatrix graph(mat);
+    std::vector<GraphMatrix::pair_II> dist = graph.dijkstra(0);
 
     return 0;
 }
