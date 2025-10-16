@@ -704,6 +704,19 @@ int main()
     // std::vector<GraphEdge::Edge> mst = edge.kruskal();
 
     // Dijkstra
+    // int INF = GraphMatrix::INF;
+    // std::vector<std::vector<int>> mat = {
+    //     {   0,   6,   3, INF, INF, INF },
+    //     {   6,   0,   2,   5, INF, INF },
+    //     {   3,   2,   0,   3,   4, INF },
+    //     { INF,   5,   3,   0,   2,   3 },
+    //     { INF, INF,   4,   2,   0,   5 },
+    //     { INF, INF, INF,   3,   5,   0 }
+    // };
+    // GraphMatrix graph(mat);
+    // std::vector<GraphMatrix::pair_II> dist = graph.dijkstra(0);
+
+    // Floyd
     int INF = GraphMatrix::INF;
     std::vector<std::vector<int>> mat = {
         {   0,   6,   3, INF, INF, INF },
@@ -714,7 +727,7 @@ int main()
         { INF, INF, INF,   3,   5,   0 }
     };
     GraphMatrix graph(mat);
-    std::vector<GraphMatrix::pair_II> dist = graph.dijkstra(0);
+    std::vector<std::vector<int>> dist = graph.floyd();
 
     return 0;
 }

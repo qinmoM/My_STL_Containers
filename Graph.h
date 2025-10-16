@@ -258,6 +258,24 @@ public:
         return S;
     }
 
+    std::vector<std::vector<int>> floyd()
+    {
+        for (int k = 0; k < matrix_.size(); ++k)
+        {
+            for (int i = 0; i < matrix_.size(); ++i)
+            {
+                for (int j = 0; j < matrix_[i].size(); ++j)
+                {
+                    if (k != i && k != j && matrix_[i][k] != INF && matrix_[k][j] != INF)
+                    {
+                        matrix_[i][j] = std::min(matrix_[i][j], matrix_[i][k] + matrix_[k][j]);
+                    }
+                }
+            }
+        }
+        return matrix_;
+    }
+
 protected:
     std::vector<std::vector<int>> matrix_;
 
