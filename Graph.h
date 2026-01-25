@@ -260,20 +260,21 @@ public:
 
     std::vector<std::vector<int>> floyd()
     {
-        for (int k = 0; k < matrix_.size(); ++k)
+        std::vector<std::vector<int>> matrixTemp = matrix_;
+        for (int k = 0; k < matrixTemp.size(); ++k)
         {
-            for (int i = 0; i < matrix_.size(); ++i)
+            for (int i = 0; i < matrixTemp.size(); ++i)
             {
-                for (int j = 0; j < matrix_[i].size(); ++j)
+                for (int j = 0; j < matrixTemp[i].size(); ++j)
                 {
-                    if (k != i && k != j && matrix_[i][k] != INF && matrix_[k][j] != INF)
+                    if (k != i && k != j && matrixTemp[i][k] != INF && matrixTemp[k][j] != INF)
                     {
-                        matrix_[i][j] = std::min(matrix_[i][j], matrix_[i][k] + matrix_[k][j]);
+                        matrixTemp[i][j] = std::min(matrixTemp[i][j], matrixTemp[i][k] + matrixTemp[k][j]);
                     }
                 }
             }
         }
-        return matrix_;
+        return matrixTemp;
     }
 
 protected:
