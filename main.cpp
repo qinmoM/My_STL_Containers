@@ -14,25 +14,24 @@
 #include "Graph.h"
 
 // Array
-void print(const Array<int>& arr)
+void print(const qinmo::Array<int>& arr)
 {
     int size = arr.size();
     std::cout << "[";
     for (int i = 0; i < arr.size(); i++)
     {
         std::cout << arr[i];
+
         if (i != size - 1)
-        {
             std::cout << ", ";
-        }
     }
     std::cout << "]" << std::endl;
 }
 
 // Sngle-linked List
-void print(const SList<int>& list)
+void print(const qinmo::SList<int>& list)
 {
-    SNode<int>* node = list.begin();
+    qinmo::SNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
     {
@@ -47,10 +46,10 @@ void print(const SList<int>& list)
 }
 
 // Sngle-circular-linked List
-void print(const SCList<int>& list)
+void print(const qinmo::SCList<int>& list)
 {
-    SNode<int>* tempHead = list.headNode();
-    SNode<int>* node = list.begin();
+    qinmo::SNode<int>* tempHead = list.headNode();
+    qinmo::SNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
     {
@@ -65,9 +64,9 @@ void print(const SCList<int>& list)
 }
 
 // Double-linked List
-void print(const DList<int>& list)
+void print(const qinmo::DList<int>& list)
 {
-    DNode<int>* node = list.begin();
+    qinmo::DNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
     {
@@ -82,10 +81,10 @@ void print(const DList<int>& list)
 }
 
 // Double-circular-linked List
-void print(const DCList<int>& list)
+void print(const qinmo::DCList<int>& list)
 {
-    DNode<int>* tempHead = list.headNode();
-    DNode<int>* node = list.begin();
+    qinmo::DNode<int>* tempHead = list.headNode();
+    qinmo::DNode<int>* node = list.begin();
     std::cout << "[";
     for (int i = 0; i < list.size(); i++)
     {
@@ -100,7 +99,7 @@ void print(const DCList<int>& list)
 }
 
 // Chaining Hash
-void print(ChainingHash<int>& hashTable, int range)
+void print(qinmo::ChainingHash<int>& hashTable, int range)
 {
     bool empty = true;
     for (int i = 0; i <= range; ++i)
@@ -111,14 +110,13 @@ void print(ChainingHash<int>& hashTable, int range)
             empty = false;
         }
     }
+
     if (empty)
-    {
         std::cout << "Hash table is empty" << std::endl;
-    }
 }
 
 // Open Hash
-void print(OpenHash<int>& hashTable, int range)
+void print(qinmo::OpenHash<int>& hashTable, int range)
 {
     bool empty = true;
     for (int i = 0; i <= range; ++i)
@@ -129,28 +127,26 @@ void print(OpenHash<int>& hashTable, int range)
             empty = false;
         }
     }
+
     if (empty)
-    {
         std::cout << "Hash table is empty" << std::endl;
-    }
 }
 
 // Consistent Hash
-void print(std::vector<std::string>& keys, ConsistentHash& ch)
+void print(std::vector<std::string>& keys, qinmo::ConsistentHash& ch)
 {
     std::unordered_map<std::string, std::list<std::string>> map;
+
     for (const std::string& ip : keys)
-    {
         map[ch.getHost(ip)].emplace_back(ip);
-    }
 
     for (const std::pair<std::string, std::list<std::string>>& p : map)
     {
         std::cout << p.first << " : " << std::endl;
+
         for (const std::string& IPtemp : p.second)
-        {
             std::cout << "\n" << IPtemp;
-        }
+
         std::cout << std::endl << "------------------------" << std::endl;
     }
 }
