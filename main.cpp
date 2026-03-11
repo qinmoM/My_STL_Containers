@@ -163,8 +163,8 @@ struct printFunc
 // Main
 int main()
 {
-    // Array
-    // Array<int> arr(1);
+    // // Array
+    // qinmo::Array<int> arr(1);
     // print(arr);
     // arr.push_back(1);
     // arr.push_back(2);
@@ -181,8 +181,8 @@ int main()
     // arr.clear();
     // print(arr);
 
-    // Sngle-linked List
-    // SList<int> list;
+    // // Sngle-linked List
+    // qinmo::SList<int> list;
     // list.push_back(2);
     // print(list);
     // list.push_front(1);
@@ -196,10 +196,10 @@ int main()
     // list.push_front(1);
     // list.push_front(0);
     // print(list);
-    // SList<int> list2;
+    // qinmo::SList<int> list2;
     // list2.push_back(5);
     // list2.push_back(6);
-    // SNode<int>* temporary = list.hasIntersection(list2);
+    // qinmo::SNode<int>* temporary = list.hasIntersection(list2);
     // if (nullptr != temporary)
     // {
     //     std::cout << temporary->data << std::endl;
@@ -234,8 +234,8 @@ int main()
     // list.clear();
     // print(list);
 
-    // Sngle-circular-linked List
-    // SCList<int> list;
+    // // Sngle-circular-linked List
+    // qinmo::SCList<int> list;
     // list.push_back(2);
     // print(list);
     // list.push_front(1);
@@ -258,8 +258,8 @@ int main()
     // list.clear();
     // print(list);
 
-    // Double-linked List
-    // DList<int> list;
+    // // Double-linked List
+    // qinmo::DList<int> list;
     // list.push_back(2);
     // print(list);
     // list.push_front(1);
@@ -277,8 +277,8 @@ int main()
     // list.clear();
     // print(list);
 
-    // Double-Circular-linked List
-    // DCList<int> list;
+    // // Double-Circular-linked List
+    // qinmo::DCList<int> list;
     // list.push_back(2);
     // print(list);
     // list.push_front(1);
@@ -297,8 +297,8 @@ int main()
     // list.clear();
     // print(list);
 
-    // Sequential Stack
-    // SStack<int> stack;
+    // // Sequential Stack
+    // qinmo::SStack<int> stack;
     // stack.push(1);
     // stack.push(2);
     // stack.push(3);
@@ -310,8 +310,8 @@ int main()
     // stack.pop();
     // std::cout << static_cast<int>(stack.empty()) << std::endl;
 
-    // Linked Stack
-    // LStack<int> stack;
+    // // Linked Stack
+    // qinmo::LStack<int> stack;
     // stack.push(1);
     // stack.push(2);
     // stack.push(3);
@@ -323,8 +323,8 @@ int main()
     // stack.pop();
     // std::cout << static_cast<int>(stack.empty()) << std::endl;
 
-    // Circular Queue
-    // CQueue<int> queue;
+    // // Circular Queue
+    // qinmo::CQueue<int> queue;
     // for (int i = 0; i < 11; i++)
     // {
     //     queue.push(i);
@@ -336,8 +336,8 @@ int main()
     //     queue.pop();
     // }
 
-    // Linked Queue
-    // LQueue<int> queue;
+    // // Linked Queue
+    // qinmo::LQueue<int> queue;
     // for (int i = 0; i < 10; ++i)
     // {
     //     queue.push(i);
@@ -349,8 +349,8 @@ int main()
     //     queue.pop();
     // }
 
-    // Priority Queue
-    // PriorityQueue<int> queue(
+    // // Priority Queue
+    // qinmo::PriorityQueue<int> queue(
     //     [](int a, int b) -> bool
     //     {
     //         return a > b;
@@ -366,8 +366,8 @@ int main()
     //     queue.pop();
     // }
 
-    // Chaining Hash Table
-    // ChainingHash<int> hashTable;
+    // // Chaining Hash Table
+    // qinmo::ChainingHash<int> hashTable;
     // hashTable.insert({ 1, 2 });
     // hashTable[0] = 4;
     // hashTable[1] = 5;
@@ -392,8 +392,8 @@ int main()
     // hashTable.clear();
     // print(hashTable, 12);
     
-    // Open Hash Table
-    // OpenHash<int> hashTable;
+    // // Open Hash Table
+    // qinmo::OpenHash<int> hashTable;
     // hashTable.insert({ 1, 2 });
     // hashTable[0] = 4;
     // print(hashTable, 1);
@@ -419,8 +419,8 @@ int main()
     // hashTable.clear();
     // print(hashTable, 12);
 
-    // BST Tree
-    // TreeBST<int> tree;
+    // // BST Tree
+    // qinmo::TreeBST<int> tree;
     // tree.insert(58);
     // tree.insert(24);
     // tree.insert(67);
@@ -432,25 +432,20 @@ int main()
     // tree.insert(41);
     // tree.insert(64);
     // tree.insert(78);
-    //
     // void (*print)(int&) =
     //     [](int& data) -> void
     //     {
     //         std::cout << data << std::endl;
     //     }
     // ;
-    //
     // tree.inorder(print);
-    //
     // tree.remove(67);
     // tree.remove(62);
     // tree.remove(69);
     // tree.remove(5);
-    //
     // tree.inorder(print);
-    //
     // int temp = 58;
-    // TreeBST<int>::Node* t = nullptr;
+    // qinmo::TreeBST<int>::Node* t = nullptr;
     // if (t = tree.find(temp))
     // {
     //     std::cout << t->data << " is present" << std::endl;
@@ -460,44 +455,37 @@ int main()
     // {
     //     std::cout << temp << " is present" << std::endl;
     // }
-    //
     // tree.clear();
     // tree.inorder(print);
 
-    // AVL Tree
-    // TreeAVL<int> tree;
+    // // AVL Tree
+    // qinmo::TreeAVL<int> tree;
     // int arr[] = { 14, 9, 5, 17, 11, 12, 7, 19, 16, 27 };
     // for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
     // {
     //     tree.insert(arr[i]);
     // }
-    //
     // int temp = 12;
-    // TreeAVL<int>::Node* it = nullptr;
+    // qinmo::TreeAVL<int>::Node* it = nullptr;
     // if (it = tree.find(temp))
     // {
     //     std::cout << it->data << " is present" << std::endl;
     // }
-    //
     // temp = 1;
     // if (it = tree.find(temp))
     // {
     //     std::cout << it->data << " is present" << std::endl;
     // }
-    //
     // tree.remove(14);
     // tree.remove(9);
     // tree.remove(5);
-    //
     // tree.inorder(
     //     [](int& data) -> void
     //     {
     //         std::cout << data << std::endl;
     //     }
     // );
-    //
     // tree.clear();
-    //
     // std::cout << std::endl;
     // tree.inorder(
     //     [](int& data) -> void
@@ -506,49 +494,44 @@ int main()
     //     }
     // );
 
-    // Red_Black Tree
-    // TreeRB<int> tree;
+    // // Red_Black Tree
+    // qinmo::TreeRB<int> tree;
     // int arr[] = { 17, 18, 23, 34, 27, 15, 9, 6, 8, 5, 25 };
-    //
+    
     // for (int i = 0; i < sizeof(arr) / sizeof(int); ++i)
     // {
     //     tree.insert(arr[i]);
     // }
-    //
     // void (*print)(int&) =
     //     [](int& data) -> void
     //     {
     //         std::cout << data << std::endl;
     //     }
     // ;
-    //
     // tree.inorder(print);
-    //
     // tree.clear();
     // tree.inorder(print);
-    //
-    // TreeRB<int>::Node* tree2 = new TreeRB<int>::Node(15, nullptr, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->left = new TreeRB<int>::Node(9, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->right = new TreeRB<int>::Node(18, tree2, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->left->left = new TreeRB<int>::Node(6, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->left->right = new TreeRB<int>::Node(13, tree2->left, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->left->right->left = new TreeRB<int>::Node(10, tree2->left->right, nullptr, nullptr, TreeRB<int>::RED);
-    // tree2->right->left = new TreeRB<int>::Node(17, tree2->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->right->right = new TreeRB<int>::Node(27, tree2->right, nullptr, nullptr, TreeRB<int>::RED);
-    // tree2->right->right->left = new TreeRB<int>::Node(23, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->right->right->right = new TreeRB<int>::Node(34, tree2->right->right, nullptr, nullptr, TreeRB<int>::BLACK);
-    // tree2->right->right->right->right = new TreeRB<int>::Node(37, tree2->right->right->right, nullptr, nullptr, TreeRB<int>::RED);
-    // tree2->right->right->left->right = new TreeRB<int>::Node(25, tree2->right->right->left, nullptr, nullptr, TreeRB<int>::RED);
-    // TreeRB<int> treeTemp(tree2);
+    // qinmo::TreeRB<int>::Node* tree2 = new qinmo::TreeRB<int>::Node(15, nullptr, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->left = new qinmo::TreeRB<int>::Node(9, tree2, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->right = new qinmo::TreeRB<int>::Node(18, tree2, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->left->left = new qinmo::TreeRB<int>::Node(6, tree2->left, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->left->right = new qinmo::TreeRB<int>::Node(13, tree2->left, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->left->right->left = new qinmo::TreeRB<int>::Node(10, tree2->left->right, nullptr, nullptr, qinmo::TreeRB<int>::RED);
+    // tree2->right->left = new qinmo::TreeRB<int>::Node(17, tree2->right, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->right->right = new qinmo::TreeRB<int>::Node(27, tree2->right, nullptr, nullptr, qinmo::TreeRB<int>::RED);
+    // tree2->right->right->left = new qinmo::TreeRB<int>::Node(23, tree2->right->right, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->right->right->right = new qinmo::TreeRB<int>::Node(34, tree2->right->right, nullptr, nullptr, qinmo::TreeRB<int>::BLACK);
+    // tree2->right->right->right->right = new qinmo::TreeRB<int>::Node(37, tree2->right->right->right, nullptr, nullptr, qinmo::TreeRB<int>::RED);
+    // tree2->right->right->left->right = new qinmo::TreeRB<int>::Node(25, tree2->right->right->left, nullptr, nullptr, qinmo::TreeRB<int>::RED);
+    // qinmo::TreeRB<int> treeTemp(tree2);
     // int arr2[] = { 18, 25, 15, 6, 13, 37, 27, 17, 34, 9, 10, 23 };
-    //
     // for (int i = 0; i < sizeof(arr2) / sizeof(int); ++i)
     // {
     //     treeTemp.remove(arr2[i]);
     // }
 
-    // Trie Tree
-    // TrieTree trie;
+    // // Trie Tree
+    // qinmo::TrieTree trie;
     // trie.add("hello");
     // trie.add("hello");
     // trie.add("hel");
@@ -557,14 +540,12 @@ int main()
     // trie.add("word");
     // std::cout << "hello : " << trie.query("hello") << std::endl;
     // std::cout << "hel : " << trie.query("hel") << std::endl;
-    //
     // trie.preOrder(
     //     [](const std::string& str) -> void
     //     {
     //         std::cout << str << std::endl;
     //     }
     // );
-    //
     // trie.remove("hello");
     // std::cout << "hello : " << trie.query("hello") << std::endl;
     //     trie.preOrder(
@@ -578,8 +559,8 @@ int main()
     // trie.remove("world");
     // trie.remove("word");
 
-    // Skip List
-    // SkipList<int, int> sl;
+    // // Skip List
+    // qinmo::SkipList<int, int> sl;
     // sl.insert(3, 30);
     // sl.insert(6, 60);
     // sl.insert(7, 70);
@@ -605,16 +586,14 @@ int main()
     // sl.remove(5);
     // sl.clear();
 
-    // Consistent Hash
-    // PhysicalHost host1("10.117.124.10", 150);
-    // PhysicalHost host2("10.117.124.20", 150);
-    // PhysicalHost host3("10.117.124.30", 600);
-    //
-    // ConsistentHash ch;
+    // // Consistent Hash
+    // qinmo::PhysicalHost host1("10.117.124.10", 150);
+    // qinmo::PhysicalHost host2("10.117.124.20", 150);
+    // qinmo::PhysicalHost host3("10.117.124.30", 600);
+    // qinmo::ConsistentHash ch;
     // ch.addHost(host1);
     // ch.addHost(host2);
     // ch.addHost(host3);
-    //
     // std::vector<std::string> keys = { 
     //     "192.168.1.123",
     //     "192.168.1.12",
@@ -628,25 +607,22 @@ int main()
     //     "192.168.1.56",
     //     "192.168.1.77",
     // };
-    //
     // print(keys, ch);
-    //
     // ch.removeHost(host2);
-    //
     // print(keys, ch);
 
-    // Huffman
+    // // Huffman
     // std::string text = "ABCDDDDDCC";
-    // Huffman huffman;
+    // qinmo::Huffman huffman;
     // huffman.create(text);
     // std::string encoded = huffman.encode(text);
     // std::cout << "Encoded string: " << encoded << std::endl;
     // std::string decoded = huffman.decode(encoded);
     // std::cout << "Decoded string: " << decoded << std::endl;
 
-    // disjoint set union
+    // // disjoint set union
     // std::vector<std::vector<int>> sets = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-    // DSU dsu(sets);
+    // qinmo::DSU dsu(sets);
     // std::cout << dsu.find(1) << std::endl;
     // std::cout << dsu.find(4) << std::endl;
     // std::cout << dsu.find(7) << std::endl;
@@ -655,8 +631,8 @@ int main()
     // std::cout << dsu.find(4) << std::endl;
     // std::cout << dsu.find(7) << std::endl;
 
-    // Graph
-    // std::unique_ptr<Graph> graph = std::make_unique<Graph>();
+    // // Graph
+    // std::unique_ptr<qinmo::Graph> graph = std::make_unique<qinmo::Graph>();
     // graph->add("A");
     // graph->add("B");
     // graph->add("C");
@@ -685,8 +661,8 @@ int main()
     // graph->dfs("D", p);
     // std::cout << std::endl;
 
-    // Kruskal
-    // GraphEdge edge;
+    // // Kruskal
+    // qinmo::GraphEdge edge;
     // edge.addEdge(1, 2, 6);
     // edge.addEdge(1, 3, 1);
     // edge.addEdge(2, 3, 5);
@@ -697,10 +673,10 @@ int main()
     // edge.addEdge(3, 6, 4);
     // edge.addEdge(5, 6, 6);
     // edge.addEdge(4, 6, 2);
-    // std::vector<GraphEdge::Edge> mst = edge.kruskal();
+    // std::vector<qinmo::GraphEdge::Edge> mst = edge.kruskal();
 
-    // Dijkstra
-    // int INF = GraphMatrix::INF;
+    // // Dijkstra
+    // int INF = qinmo::GraphMatrix::INF;
     // std::vector<std::vector<int>> mat = {
     //     {   0,   6,   3, INF, INF, INF },
     //     {   6,   0,   2,   5, INF, INF },
@@ -709,11 +685,11 @@ int main()
     //     { INF, INF,   4,   2,   0,   5 },
     //     { INF, INF, INF,   3,   5,   0 }
     // };
-    // GraphMatrix graph(mat);
-    // std::vector<GraphMatrix::pair_II> dist = graph.dijkstra(0);
+    // qinmo::GraphMatrix graph(mat);
+    // std::vector<qinmo::GraphMatrix::pair_II> dist = graph.dijkstra(0);
 
-    // Floyd
-    // int INF = GraphMatrix::INF;
+    // // Floyd
+    // int INF = qinmo::GraphMatrix::INF;
     // std::vector<std::vector<int>> mat = {
     //     {   0,   6,   3, INF, INF, INF },
     //     {   6,   0,   2,   5, INF, INF },
@@ -722,7 +698,7 @@ int main()
     //     { INF, INF,   4,   2,   0,   5 },
     //     { INF, INF, INF,   3,   5,   0 }
     // };
-    // GraphMatrix graph(mat);
+    // qinmo::GraphMatrix graph(mat);
     // std::vector<std::vector<int>> dist = graph.floyd();
 
     return 0;
