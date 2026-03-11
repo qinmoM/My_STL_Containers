@@ -2,244 +2,249 @@
 
 #include <string>
 
-class TrieTree
+namespace qinmo
 {
-public:
-    struct TrieNode
+
+    class TrieTree
     {
-        TrieNode(char c = '\0', int cnt = 0)
-            : ch(c)
-            , count(cnt)
+    public:
+        struct TrieNode
         {
-            for (TrieNode*& child : children)
+            TrieNode(char c = '\0', int cnt = 0)
+                : ch(c)
+                , count(cnt)
             {
-                child = nullptr;
+                for (TrieNode*& child : children)
+                {
+                    child = nullptr;
+                }
             }
+
+            char ch;
+            TrieNode* children[26];
+            int count;
+        };
+
+    public:
+        TrieTree()
+            : root(new TrieNode())
+            , Capacity(0)
+            , Size(0)
+        { }
+
+        ~TrieTree()
+        {
+            del(root);
         }
 
-        char ch;
-        TrieNode* children[26];
-        int count;
-    };
-
-public:
-    TrieTree()
-        : root(new TrieNode())
-        , Capacity(0)
-        , Size(0)
-    { }
-
-    ~TrieTree()
-    {
-        del(root);
-    }
-
-public:
-    bool empty() const
-    {
-        return 0 == Size;
-    }
-
-    int size() const
-    {
-        return Size;
-    }
-
-    int capacity() const
-    {
-        return Capacity;
-    }
-
-    int query(const std::string& word)
-    {
-        TrieNode* temp = root;
-        for (char c : word)
+    public:
+        bool empty() const
         {
-            if (c < 'a' || c > 'z')
-            {
-                continue;
-            }
-
-            if (nullptr == temp->children[c - 'a'])
-            {
-                return 0;
-            }
-            temp = temp->children[c - 'a'];
+            return 0 == Size;
         }
-        return temp->count;
-    }
 
-    void add(const std::string& word)
-    {
-        TrieNode* temp = root;
-        for (char c : word)
+        int size() const
         {
-            if (c < 'a' || c > 'z')
-            {
-                continue;
-            }
+            return Size;
+        }
 
-            if (temp->children[c - 'a'])
+        int capacity() const
+        {
+            return Capacity;
+        }
+
+        int query(const std::string& word)
+        {
+            TrieNode* temp = root;
+            for (char c : word)
             {
+                if (c < 'a' || c > 'z')
+                {
+                    continue;
+                }
+
+                if (nullptr == temp->children[c - 'a'])
+                {
+                    return 0;
+                }
                 temp = temp->children[c - 'a'];
             }
-            else
+            return temp->count;
+        }
+
+        void add(const std::string& word)
+        {
+            TrieNode* temp = root;
+            for (char c : word)
             {
-                temp->children[c - 'a'] = new TrieNode(c, 0);
+                if (c < 'a' || c > 'z')
+                {
+                    continue;
+                }
+
+                if (temp->children[c - 'a'])
+                {
+                    temp = temp->children[c - 'a'];
+                }
+                else
+                {
+                    temp->children[c - 'a'] = new TrieNode(c, 0);
+                    temp = temp->children[c - 'a'];
+                }
+            }
+            if (!temp->count)
+            {
+                Size += 1;
+            }
+            temp->count += 1;
+            Capacity += 1;
+        }
+
+        void remove(const std::string& word)
+        {
+            TrieNode* temp = root;
+            TrieNode* last = nullptr;
+            char lastChar = '\0';
+            for (char c : word)
+            {
+                if (c < 'a' || c > 'z')
+                {
+                    continue;
+                }
+
+                if (nullptr == temp->children[c - 'a'])
+                {
+                    return;
+                }
+
+                if (temp->count || (temp != root && !ispath(temp)))
+                {
+                    lastChar = c;
+                    last = temp;
+                }
                 temp = temp->children[c - 'a'];
             }
-        }
-        if (!temp->count)
-        {
-            Size += 1;
-        }
-        temp->count += 1;
-        Capacity += 1;
-    }
-
-    void remove(const std::string& word)
-    {
-        TrieNode* temp = root;
-        TrieNode* last = nullptr;
-        char lastChar = '\0';
-        for (char c : word)
-        {
-            if (c < 'a' || c > 'z')
-            {
-                continue;
-            }
-
-            if (nullptr == temp->children[c - 'a'])
+            if (0 == temp->count)
             {
                 return;
             }
 
-            if (temp->count || (temp != root && !ispath(temp)))
+            Size -= 1;
+            Capacity -= temp->count;
+            temp->count = 0;
+
+            if (!isleaf(temp))
             {
-                lastChar = c;
-                last = temp;
+                return;
             }
-            temp = temp->children[c - 'a'];
-        }
-        if (0 == temp->count)
-        {
-            return;
-        }
 
-        Size -= 1;
-        Capacity -= temp->count;
-        temp->count = 0;
-
-        if (!isleaf(temp))
-        {
-            return;
-        }
-
-        if (!last)
-        {
-            last = root;
-            lastChar = word[0];
-        }
-        for (TrieNode*& child : last->children)
-        {
-            if (child && child->ch == lastChar)
+            if (!last)
             {
-                del(child);
-                child = nullptr;
-                break;
+                last = root;
+                lastChar = word[0];
             }
-        }
-    }
-
-    template<class Func>
-    void preOrder(Func func)
-    {
-        for (TrieNode* child : root->children)
-        {
-            if (child)
+            for (TrieNode*& child : last->children)
             {
-                preOrder(child, func, std::string(1, child->ch));
-            }
-        }
-    }
-
-    void clear()
-    {
-        for (TrieNode* child : root->children)
-        {
-            if (child)
-            {
-                del(child);
-                child = nullptr;
-            }
-        }
-        root->count = 0;
-        Capacity = 0;
-        Size = 0;
-    }
-
-private:
-    TrieNode* root;
-    int Capacity;
-    int Size;
-
-private:
-    template<class Func>
-    void preOrder(TrieNode* node, Func func, std::string str)
-    {
-        for (TrieNode* child : node->children)
-        {
-            if (child)
-            {
-                std::string temp = str + std::string(1, child->ch);
-                if (child->count)
+                if (child && child->ch == lastChar)
                 {
-                    func(temp);
+                    del(child);
+                    child = nullptr;
+                    break;
                 }
-                preOrder(child, func, temp);
             }
         }
-    }
 
-    void del(TrieNode* node)
-    {
-        for (TrieNode* child : node->children)
+        template<class Func>
+        void preOrder(Func func)
         {
-            if (child)
+            for (TrieNode* child : root->children)
             {
-                del(child);
+                if (child)
+                {
+                    preOrder(child, func, std::string(1, child->ch));
+                }
             }
         }
-        delete node;
-    }
 
-    bool ispath(TrieNode* node)
-    {
-        if (!node)
+        void clear()
         {
-            return false;
-        }
-        int countTemp = 0;
-        for (TrieNode* child : node->children)
-        {
-            if (child)
+            for (TrieNode* child : root->children)
             {
-                countTemp += 1;
+                if (child)
+                {
+                    del(child);
+                    child = nullptr;
+                }
+            }
+            root->count = 0;
+            Capacity = 0;
+            Size = 0;
+        }
+
+    private:
+        TrieNode* root;
+        int Capacity;
+        int Size;
+
+    private:
+        template<class Func>
+        void preOrder(TrieNode* node, Func func, std::string str)
+        {
+            for (TrieNode* child : node->children)
+            {
+                if (child)
+                {
+                    std::string temp = str + std::string(1, child->ch);
+                    if (child->count)
+                    {
+                        func(temp);
+                    }
+                    preOrder(child, func, temp);
+                }
             }
         }
-        return countTemp == 1;
-    }
 
-    bool isleaf(TrieNode* node)
-    {
-        for (TrieNode* child : node->children)
+        void del(TrieNode* node)
         {
-            if (child)
+            for (TrieNode* child : node->children)
+            {
+                if (child)
+                {
+                    del(child);
+                }
+            }
+            delete node;
+        }
+
+        bool ispath(TrieNode* node)
+        {
+            if (!node)
             {
                 return false;
             }
+            int countTemp = 0;
+            for (TrieNode* child : node->children)
+            {
+                if (child)
+                {
+                    countTemp += 1;
+                }
+            }
+            return countTemp == 1;
         }
-        return true;
-    }
 
-};
+        bool isleaf(TrieNode* node)
+        {
+            for (TrieNode* child : node->children)
+            {
+                if (child)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+    };
+
+}

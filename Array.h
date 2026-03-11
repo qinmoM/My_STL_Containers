@@ -1,110 +1,114 @@
 #ifndef __ARRAY_H__
 #define __ARRAY_H__
 
-template<class T>
-class Array
+namespace qinmo
 {
-protected:
-    T* mpArr;
-    int mCapacity;
-    int mCurrent;
-    
-protected:
-    void expend(int newCapacity)
+
+    template<class T>
+    class Array
     {
-        T* newArr = new T[newCapacity];
-        for (int i = 0; i < mCurrent; i++)
+    protected:
+        T* mpArr;
+        int mCapacity;
+        int mCurrent;
+        
+    protected:
+        void expend(int newCapacity)
         {
-            newArr[i] = mpArr[i];
+            T* newArr = new T[newCapacity];
+            for (int i = 0; i < mCurrent; i++)
+            {
+                newArr[i] = mpArr[i];
+            }
+            delete[] mpArr;
+
+            mpArr = newArr;
+            mCapacity = newCapacity;
         }
-        delete[] mpArr;
 
-        mpArr = newArr;
-        mCapacity = newCapacity;
-    }
-
-public:
-    Array(int capacity = 10) : mCurrent(0), mCapacity(capacity)
-    {
-        mpArr = new T[capacity]();
-    }
-
-    ~Array()
-    {
-        delete[] mpArr;
-        mpArr = nullptr;
-    }
-
-public:
-    inline int size() const
-    {
-        return mCurrent;
-    }
-
-    inline int capacity() const
-    {
-        return mCapacity;
-    }
-
-    inline void push_back(T value) // O(1)
-    {
-        if (mCurrent == mCapacity)
+    public:
+        Array(int capacity = 10) : mCurrent(0), mCapacity(capacity)
         {
-            expend(2 * mCapacity);
+            mpArr = new T[capacity]();
         }
-        mpArr[mCurrent++] = value;
-    }
 
-    inline void pop_back() // O(1)
-    {
-        if (0 == mCurrent)
+        ~Array()
         {
-            return;
+            delete[] mpArr;
+            mpArr = nullptr;
         }
-        mCurrent--;
-    }
 
-    void insert(int index, T value) // O(n)
-    {
-        if (0 > index || mCurrent < index)
+    public:
+        inline int size() const
         {
-            return;
+            return mCurrent;
         }
-        if (mCurrent == mCapacity)
+
+        inline int capacity() const
         {
-            expend(2 * mCapacity);
+            return mCapacity;
         }
-        for (int i = mCurrent; i > index; i--)
+
+        inline void push_back(T value) // O(1)
         {
-            mpArr[i] = mpArr[i - 1];
+            if (mCurrent == mCapacity)
+            {
+                expend(2 * mCapacity);
+            }
+            mpArr[mCurrent++] = value;
         }
-        mpArr[index] = value;
-        mCurrent++;
-    }
 
-    void remove(int index) // O(n)
-    {
-        if (0 > index || mCurrent <= index)
+        inline void pop_back() // O(1)
         {
-            return;
+            if (0 == mCurrent)
+            {
+                return;
+            }
+            mCurrent--;
         }
-        for (int i = index; i < mCurrent - 1; i++)
+
+        void insert(int index, T value) // O(n)
         {
-            mpArr[i] = mpArr[i + 1];
+            if (0 > index || mCurrent < index)
+            {
+                return;
+            }
+            if (mCurrent == mCapacity)
+            {
+                expend(2 * mCapacity);
+            }
+            for (int i = mCurrent; i > index; i--)
+            {
+                mpArr[i] = mpArr[i - 1];
+            }
+            mpArr[index] = value;
+            mCurrent++;
         }
-        mCurrent--;
-    }
 
-    inline void clear()
-    {
-        mCurrent = 0;
-    }
+        void remove(int index) // O(n)
+        {
+            if (0 > index || mCurrent <= index)
+            {
+                return;
+            }
+            for (int i = index; i < mCurrent - 1; i++)
+            {
+                mpArr[i] = mpArr[i + 1];
+            }
+            mCurrent--;
+        }
 
-    inline T& operator[](const int& index) const
-    {
-        return *(mpArr + index);
-    }
+        inline void clear()
+        {
+            mCurrent = 0;
+        }
 
-};
+        inline T& operator[](const int& index) const
+        {
+            return *(mpArr + index);
+        }
 
+    };
+
+}
 #endif // __ARRAY_H__
