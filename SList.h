@@ -3,517 +3,485 @@
 namespace qinmo
 {
 
-    template<class T>
-    struct SNode
+template <class T>
+struct SNode
+{
+    T data;
+    SNode<T>* next;
+
+    SNode() : data(T()), next(nullptr) { }
+
+    SNode(T data) : data(data), next(nullptr) { }
+
+    SNode(T data, SNode<T>* next) : data(data), next(next) { }
+};
+
+
+
+template <class T>
+class SList
+{
+public:
+    SList()
     {
-        T data;
-        SNode<T>* next;
+        head = new SNode<T>();
+        Size = 0;
+    }
 
-        SNode() : data(T()), next(nullptr) { }
-
-        SNode(T data) : data(data), next(nullptr) { }
-
-        SNode(T data, SNode<T>* next) : data(data), next(next) { }
-    };
-
-
-
-    template<class T>
-    class SList
+    ~SList()
     {
-    // public:
-    protected:
-        SNode<T>* head;
-        int Size; 
-    public:
-        SList()
+        SNode<T>* curr = head;
+        while (nullptr != head)
         {
-            head = new SNode<T>();
-            Size = 0;
+            curr = head->next;
+            delete head;
+            head = curr;
         }
+    }
 
-        ~SList()
+    inline bool empty() const
+    {
+        return !Size;
+    }
+
+    inline int size() const
+    {
+        return Size;
+    }
+
+    inline SNode<T>* begin() const
+    {
+        return head->next;
+    }
+
+    inline void push_front(T data) // O(1)
+    {
+        SNode<T>* newNode = new SNode<T>(data);
+        newNode->next = head->next;
+        head->next = newNode;
+        Size++;
+    }
+
+    inline void pop_front() // O(1)
+    {
+        if (0 == Size) return;
+
+        SNode<T>* temp = head->next;
+        head->next = temp->next;
+        delete temp;
+        Size--;
+    }
+
+    void push_back(T data) // O(n)
+    {
+        SNode<T>* newNode = new SNode<T>(data);
+        SNode<T>* curr = head;
+
+        while (nullptr != curr->next)
+            curr = curr->next;
+
+        curr->next = newNode;
+        Size++;
+    }
+
+    void pop_back() // O(n)
+    {
+        if (0 == Size) return;
+
+        SNode<T>* curr = head;
+
+        while (nullptr != curr->next->next)
+            curr = curr->next;
+
+        delete curr->next;
+        curr->next = nullptr;
+        Size--;
+    }
+
+    void insert(int index, T data) // O(n)
+    {
+        if (index < 0 || index > Size) return;
+
+        SNode<T>* newNode = new SNode<T>(data);
+        SNode<T>* curr = head;
+        while (index) // if index is not zero
         {
-            SNode<T>* curr = head;
-            while (nullptr != head)
-            {
-                curr = head->next;
-                delete head;
-                head = curr;
-            }
+            curr = curr->next;
+            index--;
         }
+        newNode->next = curr->next;
+        curr->next = newNode;
+        Size++;
+    }
 
-        inline bool empty() const
+    void remove(int index) // O(n)
+    {
+        if (index < 0 || index >= Size) return;
+
+        SNode<T>* curr = head;
+        while (index) // if index is not zero
         {
-            return !Size;
+            curr = curr->next;
+            index--;
         }
+        SNode<T>* temp = curr->next;
+        curr->next = temp->next;
+        delete temp;
+        Size--;
+    }
 
-        inline int size() const
+    inline void clear()
+    {
+        while (nullptr != head->next)
+            pop_front();
+    }
+
+    void reverse() // O(n)
+    {
+        if (2 > Size) return;
+
+        SNode<T>* curr = head->next->next;
+        SNode<T>* last = head->next;
+        while (nullptr != curr)
         {
-            return Size;
+            last->next = curr->next;
+            curr->next = head->next;
+            head->next = curr;
+            curr = last->next;
         }
+    }
 
-        inline SNode<T>* begin() const
-        {
-            return head->next;
-        }
+    // Find the index from the end of the list // Here is a demonstration of the situation without size:
+    SNode<T>* endAt(int index) // O(n)
+    {
+        if (0 >= index) return nullptr;
 
-        inline void push_front(T data) // O(1)
+        SNode<T>* curr = head;
+        SNode<T>* result = head;
+        while (nullptr != curr)
         {
-            SNode<T>* newNode = new SNode<T>(data);
-            newNode->next = head->next;
-            head->next = newNode;
-            Size++;
-        }
-
-        inline void pop_front() // O(1)
-        {
-            if (0 == Size)
-            {
-                return;
-            }
-            SNode<T>* temp = head->next;
-            head->next = temp->next;
-            delete temp;
-            Size--;
-        }
-
-        void push_back(T data) // O(n)
-        {
-            SNode<T>* newNode = new SNode<T>(data);
-            SNode<T>* curr = head;
-            while (nullptr != curr->next)
-            {
+            if (nullptr != curr)
                 curr = curr->next;
-            }
-            curr->next = newNode;
-            Size++;
-        }
-
-        void pop_back() // O(n)
-        {
-            if (0 == Size)
-            {
-                return;
-            }
-            SNode<T>* curr = head;
-            while (nullptr != curr->next->next)
-            {
-                curr = curr->next;
-            }
-            delete curr->next;
-            curr->next = nullptr;
-            Size--;
-        }
-
-        void insert(int index, T data) // O(n)
-        {
-            if (index < 0 || index > Size)
-            {
-                return;
-            }
-            SNode<T>* newNode = new SNode<T>(data);
-            SNode<T>* curr = head;
-            while (index) // if index is not zero
-            {
-                curr = curr->next;
-                index--;
-            }
-            newNode->next = curr->next;
-            curr->next = newNode;
-            Size++;
-        }
-
-        void remove(int index) // O(n)
-        {
-            if (index < 0 || index >= Size)
-            {
-                return;
-            }
-            SNode<T>* curr = head;
-            while (index) // if index is not zero
-            {
-                curr = curr->next;
-                index--;
-            }
-            SNode<T>* temp = curr->next;
-            curr->next = temp->next;
-            delete temp;
-            Size--;
-        }
-
-        inline void clear()
-        {
-            while (nullptr != head->next)
-            {
-                pop_front();
-            }
-        }
-
-        void reverse() // O(n)
-        {
-            if (2 > Size)
-            {
-                return;
-            }
-            SNode<T>* curr = head->next->next;
-            SNode<T>* last = head->next;
-            while (nullptr != curr)
-            {
-                last->next = curr->next;
-                curr->next = head->next;
-                head->next = curr;
-                curr = last->next;
-            }
-        }
-
-        // Find the index from the end of the list // Here is a demonstration of the situation without size:
-        SNode<T>* endAt(int index) // O(n)
-        {
-            if (0 >= index)
-            {
+            else
                 return nullptr;
-            }
-            SNode<T>* curr = head;
-            SNode<T>* result = head;
-            while (nullptr != curr)
-            {
-                if (nullptr != curr)
-                {
-                    curr = curr->next;
-                }
-                else
-                {
-                    return nullptr;
-                }
 
-                if (0 == index)
-                {
-                    result = result->next;
-                }
-                else
-                {
-                    index--;
-                }
-            }
-            if (index)
+            if (0 == index)
+                result = result->next;
+            else
+                index--;
+        }
+
+        if (index)
+            return nullptr;
+        else
+            return result;
+    }
+
+    // merge two sorted lists // O(n)
+    void merge(SList<T>& other, bool ascending = true)
+    {
+        SNode<T>* curr = head;
+        SNode<T>* temp = other.head->next;
+        while (nullptr != curr)
+        {
+            if (nullptr == curr->next)
             {
-                return nullptr;
+                curr->next = temp;
+                other.head->next = nullptr;
+                Size += other.Size;
+                other.Size = 0;
+                break;
+            }
+
+            if (nullptr == temp)
+                break;
+
+            if (ascending ? (curr->next->data >= temp->data) : (curr->next->data <= temp->data))
+            {
+                other.head->next = temp->next;
+                temp->next = curr->next;
+                curr->next = temp;
+                curr = curr->next;
+                temp = other.head->next;
+                Size++;
+                other.Size--;
             }
             else
             {
-                return result;
+                curr = curr->next;
             }
         }
+        other.~SList();
+    }
 
-        // merge two sorted lists // O(n)
-        void merge(SList<T>& other, bool ascending = true)
-        {
-            SNode<T>* curr = head;
-            SNode<T>* temp = other.head->next;
-            while (nullptr != curr)
-            {
-                if (nullptr == curr->next)
-                {
-                    curr->next = temp;
-                    other.head->next = nullptr;
-                    Size += other.Size;
-                    other.Size = 0;
-                    break;
-                }
-                if (nullptr == temp)
-                {
-                    break;
-                }
-                if (ascending ? (curr->next->data >= temp->data) : (curr->next->data <= temp->data))
-                {
-                    other.head->next = temp->next;
-                    temp->next = curr->next;
-                    curr->next = temp;
-                    curr = curr->next;
-                    temp = other.head->next;
-                    Size++;
-                    other.Size--;
-                }
-                else
-                {
-                    curr = curr->next;
-                }
-            }
-            other.~SList();
-        }
-
-        // Judge whether these is a loop in the list.If not,return nullptr.Conversely,return the beginning of the loop. // O(n)
-        SNode<T>* hasLoop()
-        {
-            SNode<T>* slow = head;
-            SNode<T>* fast = head;
-            while (nullptr != fast && nullptr != fast->next)
-            {
-                slow = slow->next;
-                fast = fast->next->next;
-                if (slow == fast)
-                {
-                    slow = head;
-                    while (slow != fast)
-                    {
-                        slow = slow->next;
-                        fast = fast->next;
-                    }
-                    return slow;
-                }
-            }
-            return nullptr;
-        }
-
-        // Find the intersection point of two linked lists.If not,return nullptr.Conversely,return the intersection point. // O(n)
-        SNode<T>* hasIntersection(SList<T>& other)
-        {
-            SNode<T>* curr1 = head;
-            SNode<T>* curr2 = other.head;
-            int len = size() - other.size();
-            if (len < 0)
-            {
-                curr1 = other.head;
-                curr2 = head;
-                len = -len;
-            }
-            while (len)
-            {
-                curr1 = curr1->next;
-                len--;
-            }
-            while (curr1 != nullptr && curr1 != curr2)
-            {
-                curr1 = curr1->next;
-                curr2 = curr2->next;
-            }
-            return curr1;
-        }
-    };
-
-
-
-    template<class T>
-    class SCList
+    // Judge whether these is a loop in the list.If not,return nullptr.Conversely,return the beginning of the loop. // O(n)
+    SNode<T>* hasLoop()
     {
-    protected:
-        SNode<T>* head;
-        SNode<T>* tail;
-        int Size;
-    public:
-        SCList()
+        SNode<T>* slow = head;
+        SNode<T>* fast = head;
+        while (nullptr != fast && nullptr != fast->next)
         {
-            head = new SNode<T>();
-            head->next = head;
-            tail = head;
-            Size = 0;
-        }
-
-        ~SCList()
-        {
-            SNode<T>* temp = head;
-            SNode<T>* curr = head;
-            while (temp != curr)
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
             {
-                head = curr->next;
-                delete curr;
-                curr = head;
+                slow = head;
+                while (slow != fast)
+                {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow;
             }
         }
+        return nullptr;
+    }
 
-        inline SNode<T>* headNode() const
+    // Find the intersection point of two linked lists.If not,return nullptr.Conversely,return the intersection point. // O(n)
+    SNode<T>* hasIntersection(SList<T>& other)
+    {
+        SNode<T>* curr1 = head;
+        SNode<T>* curr2 = other.head;
+        int len = size() - other.size();
+        if (len < 0)
         {
-            return head;
+            curr1 = other.head;
+            curr2 = head;
+            len = -len;
         }
-
-        inline bool empty() const
+        while (len)
         {
-            return !Size;
+            curr1 = curr1->next;
+            len--;
         }
-
-        inline int size() const
+        while (curr1 != nullptr && curr1 != curr2)
         {
-            return Size;
+            curr1 = curr1->next;
+            curr2 = curr2->next;
         }
+        return curr1;
+    }
 
-        inline SNode<T>* begin() const
+protected:
+    SNode<T>* head;
+    int Size;
+
+};
+
+
+
+template <class T>
+class SCList
+{
+public:
+    SCList()
+    {
+        head = new SNode<T>();
+        head->next = head;
+        tail = head;
+        Size = 0;
+    }
+
+    ~SCList()
+    {
+        SNode<T>* temp = head;
+        SNode<T>* curr = head;
+        while (temp != curr)
         {
-            if (0 >= Size)
-            {
-                return nullptr;
-            }
-            return head->next;
+            head = curr->next;
+            delete curr;
+            curr = head;
         }
+    }
 
-        inline void push_front(T data) // O(1)
-        {
-            SNode<T>* newNode = new SNode<T>(data);
-            newNode->next = head->next;
-            head->next = newNode;
-            Size++;
-            if (1 == Size)
-            {
-                tail = newNode;
-            }
-        }
+    inline SNode<T>* headNode() const
+    {
+        return head;
+    }
 
-        inline void pop_front() // O(1)
-        {
-            SNode<T>* temp = head->next;
-            head->next = temp->next;
-            delete temp;
-            Size--;
-            if (0 == Size)
-            {
-                tail = head;
-            }
-        }
+    inline bool empty() const
+    {
+        return !Size;
+    }
 
-        inline void push_back(T data) // O(1)
-        {
-            SNode<T>* newNode = new SNode(data);
-            newNode->next = head;
-            tail->next = newNode;
+    inline int size() const
+    {
+        return Size;
+    }
+
+    inline SNode<T>* begin() const
+    {
+        if (0 >= Size)
+            return nullptr;
+
+        return head->next;
+    }
+
+    inline void push_front(T data) // O(1)
+    {
+        SNode<T>* newNode = new SNode<T>(data);
+        newNode->next = head->next;
+        head->next = newNode;
+        Size++;
+
+        if (1 == Size)
             tail = newNode;
-            Size++;
-        }
+    }
 
-        void pop_back() // O(n)
+    inline void pop_front() // O(1)
+    {
+        SNode<T>* temp = head->next;
+        head->next = temp->next;
+        delete temp;
+        Size--;
+
+        if (0 == Size)
+            tail = head;
+    }
+
+    inline void push_back(T data) // O(1)
+    {
+        SNode<T>* newNode = new SNode(data);
+        newNode->next = head;
+        tail->next = newNode;
+        tail = newNode;
+        Size++;
+    }
+
+    void pop_back() // O(n)
+    {
+        if (0 == Size) return;
+
+        if (head->next == tail)
         {
-            if (0 == Size)
-            {
-                return;
-            }
-            if (head->next == tail)
-            {
-                delete tail;
-                tail = head;
-            }
-            SNode<T>* curr = head;
-            while (tail != curr->next)
-            {
-                curr = curr->next;
-            }
-            curr->next = head;
             delete tail;
+            tail = head;
+        }
+
+        SNode<T>* curr = head;
+
+        while (tail != curr->next)
+            curr = curr->next;
+
+        curr->next = head;
+        delete tail;
+        tail = curr;
+        Size--;
+    }
+
+    inline void insert(int index, T data)
+    {
+        if (0 > index || Size < index) return;
+
+        if (0 == index)
+        {
+            push_front(data);
+            return;
+        }
+        if (Size == index)
+        {
+            push_back(data);
+            return;
+        }
+        SNode<T>* newNode = new SNode<T>(data);
+        SNode<T>* curr = head;
+        while (index)
+        {
+            curr = curr->next;
+            index--;
+        }
+        newNode->next = curr->next;
+        curr->next = newNode;
+        Size++;
+    }
+
+    void remove(int index) // O(n)
+    {
+        if (0 > index || Size <= index) return;
+
+        if (0 == index)
+        {
+            pop_front();
+            return;
+        }
+        if (Size - 1 == index)
+        {
+            pop_back();
+            return;
+        }
+        SNode<T>* curr = head;
+        while (index)
+        {
+            curr = curr->next;
+            index--;
+        }
+        SNode<T>* temp = curr->next;
+        curr->next = temp->next;
+        delete temp;
+        Size--;
+    }
+
+    inline void clear()
+    {
+        SNode<T>* curr = head->next;
+        SNode<T>* temp = nullptr;
+        while (Size)
+        {
+            temp = curr->next;
+            delete curr;
+            curr = temp;
+            Size--;
+        }
+        head->next = head;
+        tail = head;
+    }
+
+    void josephusSort(int k, int m) // O(n * m)
+    {
+        // Check the boundary conditions
+        if (0 >= k || 0 >= m || 1 >= Size)
+            return;
+
+        tail->next = head->next;
+        SNode<T>* curr = tail;
+        SNode<T>* last = nullptr;
+        tail = head;
+
+        // Find the kth node
+        while (k > 0)
+        {
+            last = curr;
+            curr = curr->next;
+            k--;
+        }
+
+        // Traverse and move the nodes
+        while (curr != last)
+        {
+            tail->next = curr;
             tail = curr;
-            Size--;
-        }
-
-        inline void insert(int index, T data)
-        {
-            if (0 > index || Size < index)
-            {
-                return;
-            }
-            if (0 == index)
-            {
-                push_front(data);
-                return;
-            }
-            if (Size == index)
-            {
-                push_back(data);
-                return;
-            }
-            SNode<T>* newNode = new SNode<T>(data);
-            SNode<T>* curr = head;
-            while (index)
-            {
-                curr = curr->next;
-                index--;
-            }
-            newNode->next = curr->next;
-            curr->next = newNode;
-            Size++;
-        }
-
-        void remove(int index) // O(n)
-        {
-            if (0 > index || Size <= index)
-            {
-                return;
-            }
-            if (0 == index)
-            {
-                pop_front();
-                return;
-            }
-            if (Size - 1 == index)
-            {
-                pop_back();
-                return;
-            }
-            SNode<T>* curr = head;
-            while (index)
-            {
-                curr = curr->next;
-                index--;
-            }
-            SNode<T>* temp = curr->next;
-            curr->next = temp->next;
-            delete temp;
-            Size--;
-        }
-
-        inline void clear()
-        {
-            SNode<T>* curr = head->next;
-            SNode<T>* temp = nullptr;
-            while (Size)
-            {
-                temp = curr->next;
-                delete curr;
-                curr = temp;
-                Size--;
-            }
-            head->next = head;
-            tail = head;
-        }
-
-        void josephusSort(int k, int m) // O(n * m)
-        {
-            // Check the boundary conditions
-            if (0 >= k || 0 >= m || 1 >= Size)
-            {
-                return;
-            }
-
-            tail->next = head->next;
-            SNode<T>* curr = tail;
-            SNode<T>* last = nullptr;
-            tail = head;
-
-            // Find the kth node
-            while (k > 0)
+            last->next = curr->next;
+            curr = last->next;
+            k = 1;
+            while (m > k)
             {
                 last = curr;
                 curr = curr->next;
-                k--;
+                k++;
             }
-
-            // Traverse and move the nodes
-            while (curr != last)
-            {
-                tail->next = curr;
-                tail = curr;
-                last->next = curr->next;
-                curr = last->next;
-                k = 1;
-                while (m > k)
-                {
-                    last = curr;
-                    curr = curr->next;
-                    k++;
-                }
-            }
-
-            // Handle the last node
-            tail->next = curr;
-            curr->next = head;
-            tail = curr;
         }
-    };
 
-}
+        // Handle the last node
+        tail->next = curr;
+        curr->next = head;
+        tail = curr;
+    }
+
+protected:
+    SNode<T>* head;
+    SNode<T>* tail;
+    int Size;
+
+};
+
+} // namespace
